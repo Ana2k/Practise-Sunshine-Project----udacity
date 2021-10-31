@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--    https://classroom.udacity.com/courses/ud851/lessons/93affc67-3f0b-4f9b-b3a4-a7a26f241a86/concepts/cdbfd437-de24-4903-8f01-37c29427cb38-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,3 +20,9 @@
     </ScrollView>
 
 </FrameLayout>
+<!-- The difference is that padding determines space within the boundaries of the view, and layout_margin determines the space outside the boundaries of the view-->
+
+<!--good with quick layout revision -->
+    <!--sthh about layouts being containerview or viewgroups-&#45;&#45;home for other views-->
+<!--sth also about android - widgets-->
+<!--sth aboout a chronometer&#45;&#45;simple timer on screen-->

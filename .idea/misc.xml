@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/art_clear.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/art_clouds.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_forecast.xml" value="0.155146316851665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
       </map>
