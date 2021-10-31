@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+//BEFORE PROCEEDING.
+//CREATE A BRANCH FOR UI-Layout-dummy data SPECIFICALLY AND COPY THE BRANCH FROM FIRST COMMIT TILL THIS COMMIT
+//THEN CREATE Another branch called network do the Network based work on that branch
+//and merge it with master at the end.
+//from github
 public class MainActivity extends AppCompatActivity {
     TextView mWeatherTextView;
     @Override
