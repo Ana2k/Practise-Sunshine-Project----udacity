@@ -127,6 +127,7 @@
     <string name="edit_text_hint">Enter a Query.Then click Search</string>
     <string name="tv_url_display_text">Search URL will show up on clicking Search</string>
     <string name="scroll_view_tv_text">Make a Search to see results</string>
+    <string name="search_menu">Search</string>
 
 
     <!-- - - - - - - - - - - -->
