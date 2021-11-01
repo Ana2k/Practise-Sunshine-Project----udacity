@@ -1,47 +1,25 @@
 package com.example.sunshineapp;
 
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    TextView mWeatherTextView;
+    EditText mSearchBoxEditText;
+    TextView mUrlDisplayTextView,mSearchResultsTextView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWeatherTextView = (TextView) findViewById(R.id.tv_weather_data);
 
-        //for dummy data
-//        String [] dummyWeatherDataList = (TextView)  STH.SOMEotherSStaticFunction;
-
-        String[] dummyWeatherDataList = {
-                "Today, May 17 - Clear - 17°C / 15°C",
-                "Tomorrow - Cloudy - 19°C / 15°C",
-                "Thursday - Rainy- 30°C / 11°C",
-                "Friday - Thunderstorms - 21°C / 9°C",
-                "Saturday - Thunderstorms - 16°C / 7°C",
-                "Sunday - Rainy - 16°C / 8°C",
-                "Monday - Partly Cloudy - 15°C / 10°C",
-                "Tue, May 24 - Meatballs - 16°C / 18°C",
-                "Wed, May 25 - Cloudy - 19°C / 15°C",
-                "Thu, May 26 - Stormy - 30°C / 11°C",
-                "Fri, May 27 - Hurricane - 21°C / 9°C",
-                "Sat, May 28 - Meteors - 16°C / 7°C",
-                "Sun, May 29 - Apocalypse - 16°C / 8°C",
-                "Mon, May 30 - Post Apocalypse - 15°C / 10°C",
-        };
-
-
-        for (String dummyWeatherDataListElement: dummyWeatherDataList){
-            mWeatherTextView.append(dummyWeatherDataListElement+"\n\n");
-        }
+        mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
+        mUrlDisplayTextView = (TextView) findViewById(R.id.url_display_tv);
+        mSearchResultsTextView = (TextView) findViewById(R.id.tv_github_search_results_json);
     }
 
-    //so far about Adb, command line tools and ./gradlew tasks(from root--> chmod first)
-
-    //https://classroom.udacity.com/courses/ud851/lessons/93affc67-3f0b-4f9b-b3a4-a7a26f241a86/concepts/98b2f686-aca1-4547-9632-31e84ccca355
-    //https://github.com/udacity/ud851-Sunshine/tree/student/S01.01-Exercise-CreateLayout/app/src/main/java/com/example/android/sunshine
-
+   //github repo from https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/df87e335-ec8d-4383-9e32-78f8e0f982f1
 }

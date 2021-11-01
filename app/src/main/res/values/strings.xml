@@ -124,6 +124,9 @@
     <string name="condition_962">Hurricane</string>
 
     <string name="condition_unknown">Unknown (<xliff:g id="conditionId">%1$d</xliff:g>)</string>
+    <string name="edit_text_hint">Enter a Query.Then click Search</string>
+    <string name="tv_url_display_text">Search URL will show up on clicking Search</string>
+    <string name="scroll_view_tv_text">Make a Search to see results</string>
 
 
     <!-- - - - - - - - - - - -->
