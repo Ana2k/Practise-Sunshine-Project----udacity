@@ -11,11 +11,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-//YOU WERE AT-->
-//https://youtu.be/Zim98WIKSYI?t=124
-//on site: https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/6429b4ab-c9ee-45d2-9d7c-d18a8364827d
-// and github page: https://github.com/udacity/ud851-Exercises/blob/student/Lesson02-GitHub-Repo-Search/T02.03-Exercise-DisplayUrl/app/src/main/java/com/example/android/datafrominternet/utilities/NetworkUtils.java
-//was open
+
+import com.example.sunshineapp.utilities.NetworkUtils;
+
+import java.net.URL;
+
 
 public class MainActivity extends AppCompatActivity {
     EditText mSearchBoxEditText;
@@ -27,14 +27,18 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main,menu);
         return true;
     }
+    void makeGithubSearchQuery(){
+//        build the URL with the text from the EditText and set the built URL to the TextView
+        String githubSearchQuery = mSearchBoxEditText.getText().toString();
+        URL githubSearchUrl = NetworkUtils.buildUrl(githubSearchQuery);
+        mUrlDisplayTextView.setText(githubSearchUrl.toString());
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int idMenuItemSelected = item.getItemId();
-        Context context = getApplicationContext();
-        CharSequence toastMessage = "Menu id inflated ";
         if(idMenuItemSelected == R.id.action_search){
-            Toast.makeText(context,toastMessage,Toast.LENGTH_LONG).show();
+            makeGithubSearchQuery();
             return true;
         }
         return super.onOptionsItemSelected(item);

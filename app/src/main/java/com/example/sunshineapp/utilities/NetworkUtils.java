@@ -23,11 +23,12 @@ public class NetworkUtils {
     @return -- the URL to use to query the Github server
     **/
     public static URL buildUrl(String githubSearchQuery){
-        //TODO() fill in the method, to build the proper Github query URL
         Uri builtUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
                 .appendQueryParameter(PARAM_QUERY,githubSearchQuery)
                 .appendQueryParameter(PARAM_SORT,sortBy)
                 .build();
+        //appendQueryParameter(String key, String value)
+        //Encodes the key and value and then appends the parameter to the query string.
         URL url = null;
         try{
             url = new URL(builtUri.toString());
@@ -44,6 +45,7 @@ public class NetworkUtils {
      * @throws -- IOException related to network and stream reading
      */
     //WHAT ABOUT RETROFIT HERE -- ideally should have been a retrofit call?
+    //it is a more primitive rertrofit call only.
     public static String getResponseFromHttpUrl(URL url) throws IOException{
         HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
         try {
@@ -51,16 +53,9 @@ public class NetworkUtils {
 
             Scanner scanner = new Scanner(in);//Alt - enter did not help me here
             scanner.useDelimiter("\\A");
-            // Now the scanner set as
-            // delimiter the [Regexp for \A][1]
-            // \A stands for :start of a string!
-
-            // Here it returns the first(next)
-            // token that is before another
-            // start of string.
-            // Which, I'm not sure
-            // what it will be
-            //https://stackoverflow.com/questions/36278304/url-scanner-delimiter-how-does-this-java-line-of-code-works
+//            https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/195163c8-abbb-424a-90ab-2ee6d07720a3
+            //explains this function best above video.
+            //and some additional brownie resources. on Networking parsing etc ;)
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
                 return scanner.next();
@@ -70,6 +65,7 @@ public class NetworkUtils {
         }finally{
             urlConnection.disconnect();
         }
+        //Anther way = OkHttp
         //CHANGED ONE LINE HERE USED HTTPS not http inbuilt java module...felt more apt
     }
 
