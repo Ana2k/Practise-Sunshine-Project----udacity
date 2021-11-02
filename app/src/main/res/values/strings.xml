@@ -144,4 +144,7 @@
     <!--Used by SunshinePreferences-->
     <!-- - - - - - - - - - - - - - -->
     <!--NONE-->
+
+    <!--USed by Network Toy App-->
+    <string name = "error_message">"Failed to get results. Please try again."</string>
 </resources>
