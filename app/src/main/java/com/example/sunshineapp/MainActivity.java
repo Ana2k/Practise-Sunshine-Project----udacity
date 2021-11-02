@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sunshineapp.utilities.NetworkUtils;
 
+import java.io.IOException;
 import java.net.URL;
 
 
@@ -32,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
         String githubSearchQuery = mSearchBoxEditText.getText().toString();
         URL githubSearchUrl = NetworkUtils.buildUrl(githubSearchQuery);
         mUrlDisplayTextView.setText(githubSearchUrl.toString());
+
+        //call the HTTP request
+        try {
+            String githubSearchReponse = NetworkUtils.getResponseFromHttpUrl(githubSearchUrl);
+            mSearchResultsTextView.setText(githubSearchReponse);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -65,6 +65,7 @@ public class NetworkUtils {
         }finally{
             urlConnection.disconnect();
         }
+        //always close a file if you open it--= always close a connection if you open it ;)
         //Anther way = OkHttp
         //CHANGED ONE LINE HERE USED HTTPS not http inbuilt java module...felt more apt
     }
