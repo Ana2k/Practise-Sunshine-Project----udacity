@@ -14,8 +14,18 @@ public class NetworkUtils {
 
     private static final String FORECAST_BASE_URL = STATIC_WEATHER_URL;
 
+    /*
+     * NOTE: These values only effect responses from OpenWeatherMap, NOT from the fake weather
+     * server. They are simply here to allow us to teach you how to build a URL if you were to use
+     * a real API.If you want to connect your app to OpenWeatherMap's API, feel free to! However,
+     * we are not going to show you how to do so in this course.
+     */
+
+    /* The format we want our API to return */
     private static final String format = "json";
+    /* The units we want our API to return */
     private static final String units = "metric";
+    /* The number of days we want our API to return */
     private static final int numDays = 14;
 
     final static String QUERY_PARAM = "q";
@@ -25,9 +35,23 @@ public class NetworkUtils {
     final static String UNITS_PARAM = "units";
     final static String DAYS_PARAM = "cnt";
 
-    public static URL buildURL(Double lat, Double lon){
+    public static URL buildURL(String locatioQuery){
+        // TODO (1) Fix this method to return the URL used to query Open Weather Map's API
         return null;
     }
+
+    public static URL buildURL(Double lat, Double lon){
+
+        return null;
+    }
+
+    /**
+     * Returns the entire result from HTTP response
+     *
+     * @param url - fetches HTTP response form
+     * @return
+     * @throws IOException
+     */
     public static String getResponseHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
