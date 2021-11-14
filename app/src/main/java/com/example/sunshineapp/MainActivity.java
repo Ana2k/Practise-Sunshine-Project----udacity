@@ -1,47 +1,136 @@
 package com.example.sunshineapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sunshineapp.data.SunshinePreferences;
+import com.example.sunshineapp.utilities.NetworkUtils;
+import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
+import com.example.sunshineapp.utilities.SunshineWeatherUtils;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.net.URL;
+//BEFORE PROCEEDING.
+//You had completed the last todo on this page
+//you had to run the app once check if there were any non committed commits.
+//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/c4aba829-2bb7-42a0-9214-42fef3534b93
+//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/d6dd3b5a-70c1-48ab-97d9-59ef9d10062f
+//rem two todos
+
 public class MainActivity extends AppCompatActivity {
-    TextView mWeatherTextView;
+    private TextView mWeatherTextView,mErrorMessage;
+    private ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mWeatherTextView = (TextView) findViewById(R.id.tv_weather_data);
+        mErrorMessage = (TextView) findViewById(R.id.tv_error_message);
+        mProgressBar = (ProgressBar) findViewById(R.id.pb_loading_bar);
 
-        //for dummy data
-//        String [] dummyWeatherDataList = (TextView)  STH.SOMEotherSStaticFunction;
+        loadWeatherData();
+    }
+    void loadWeatherData(){
+        //added later
+        showJsonDataView();
+        String location = SunshinePreferences.getPreferredWeatherLocation(getBaseContext());
 
-        String[] dummyWeatherDataList = {
-                "Today, May 17 - Clear - 17°C / 15°C",
-                "Tomorrow - Cloudy - 19°C / 15°C",
-                "Thursday - Rainy- 30°C / 11°C",
-                "Friday - Thunderstorms - 21°C / 9°C",
-                "Saturday - Thunderstorms - 16°C / 7°C",
-                "Sunday - Rainy - 16°C / 8°C",
-                "Monday - Partly Cloudy - 15°C / 10°C",
-                "Tue, May 24 - Meatballs - 16°C / 18°C",
-                "Wed, May 25 - Cloudy - 19°C / 15°C",
-                "Thu, May 26 - Stormy - 30°C / 11°C",
-                "Fri, May 27 - Hurricane - 21°C / 9°C",
-                "Sat, May 28 - Meteors - 16°C / 7°C",
-                "Sun, May 29 - Apocalypse - 16°C / 8°C",
-                "Mon, May 30 - Post Apocalypse - 15°C / 10°C",
-        };
-
-
-        for (String dummyWeatherDataListElement: dummyWeatherDataList){
-            mWeatherTextView.append(dummyWeatherDataListElement+"\n\n");
-        }
+        new LocationQueryTask().execute(location);
+        //foramtted for further lessons where we take user input presumably
+    }
+    public void showJsonDataView(){
+        //mErrorMessage invisbile and mSearchResults visible
+        mErrorMessage.setVisibility(View.INVISIBLE);
+        mWeatherTextView.setVisibility(View.VISIBLE);
+    }
+    public void showErrorMessage(){
+        mErrorMessage.setVisibility(View.VISIBLE);
+        mWeatherTextView.setVisibility(View.INVISIBLE);
     }
 
-    //so far about Adb, command line tools and ./gradlew tasks(from root--> chmod first)
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_refresh,menu);
+        return true;
+    }
 
-    //https://classroom.udacity.com/courses/ud851/lessons/93affc67-3f0b-4f9b-b3a4-a7a26f241a86/concepts/98b2f686-aca1-4547-9632-31e84ccca355
-    //https://github.com/udacity/ud851-Sunshine/tree/student/S01.01-Exercise-CreateLayout/app/src/main/java/com/example/android/sunshine
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int idMenuSelected = item.getItemId();
+        if(idMenuSelected == R.id.action_refresh){
+            mWeatherTextView.setText("");
+            loadWeatherData();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    private class LocationQueryTask extends AsyncTask<String,Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(String... parameters) {
+            //first we check wether parameter has any value
+            if (parameters.length==0){
+                //no data has been passed.
+                Log.d("Main - doInBackground","PARAM LENGTH IS NULL");
+                return null;
+            }
+            /* If there's no zip code, there's nothing to look up. */
+            String location = parameters[0];
+            URL weatherRequestURL = NetworkUtils.buildURL(location);
+
+            try{
+                String weatherSearchResponse = NetworkUtils.getResponseHttpUrl(weatherRequestURL);
+                String[] simpleJsonWeatherData = OpenWeatherJsonUtils.getSimpleWeatherStringsfromJson(getApplicationContext(),weatherSearchResponse);
+                return simpleJsonWeatherData;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mProgressBar.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String[] weatherResponses) {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            if(weatherResponses != null){
+                showJsonDataView();
+                /*
+                 * Iterate through the array and append the Strings to the TextView. The reason why we add
+                 * the "\n\n\n" after the String is to give visual separation between each String in the
+                 * TextView. Later, we'll learn about a better way to display lists of data.
+                 */
+
+                for(String weatherResponse : weatherResponses){
+                mWeatherTextView.append(weatherResponse+"\n\n\n");
+                }
+            }
+            else{
+                showErrorMessage();
+            }
+        }
+    }
 }
+//https://github.com/Ana2k/Practise-Sunshine-Project----udactiy/blob/toy_app_network/app/src/main/java/com/example/sunshineapp/MainActivity.java
+//The toy app AsyncTask :)
+//https://github.com/udacity/ud851-Sunshine/blob/S02.01-Exercise-Networking/app/src/main/java/com/example/android/sunshine/MainActivity.java
+//The todos
