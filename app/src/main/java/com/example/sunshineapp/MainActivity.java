@@ -3,8 +3,12 @@ package com.example.sunshineapp;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sunshineapp.data.SunshinePreferences;
@@ -19,7 +23,10 @@ import java.net.URL;
 //BEFORE PROCEEDING.
 //You had completed the last todo on this page
 //you had to run the app once check if there were any non committed commits.
-//
+//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/c4aba829-2bb7-42a0-9214-42fef3534b93
+//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/d6dd3b5a-70c1-48ab-97d9-59ef9d10062f
+//rem two todos
+
 public class MainActivity extends AppCompatActivity {
     private TextView mWeatherTextView;
     @Override
@@ -36,8 +43,23 @@ public class MainActivity extends AppCompatActivity {
         //foramtted for further lessons where we take user input presumably
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_refresh,menu);
+        return true;
+    }
 
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int idMenuSelected = item.getItemId();
+        if(idMenuSelected == R.id.action_refresh){
+            mWeatherTextView.setText("");
+            loadWeatherData();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private class LocationQueryTask extends AsyncTask<String,Void, String[]> {
 
@@ -75,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
                 for(String weatherResponse : weatherResponses){
                 mWeatherTextView.append(weatherResponse+"\n\n\n");
-            }
+                }
             }
         }
     }

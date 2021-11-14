@@ -5,10 +5,12 @@
     <!-- Used throughout Sunshine-->
     <!-- - - - - - - - - - - - - -->
 
+
     <!--Used in Action Bar, and in AndroidManifest to tell the device the name of this app.-->
     <!--It's good to keep this short, so your launcher icon isn't displayed with "The greatest Wea"-->
     <!--or something similar.-->
     <string name="app_name">Sunshine</string>
+    <string name="refresh">Refresh</string>
 
 
     <!-- - - - - - - - - - - - - -->
@@ -110,6 +112,7 @@
     <string name="condition_962">Hurricane</string>
 
     <string name="condition_unknown">Unknown (<xliff:g id="conditionId">%1$d</xliff:g>)</string>
+    <string name="error_message">OOPS! ERROR CONNECTING TO THE NETWORK</string>
 
 
     <!-- - - - - - - - - - - -->
