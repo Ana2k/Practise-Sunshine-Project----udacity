@@ -2,6 +2,7 @@
 <FrameLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp">
     <TextView
         android:id="@+id/tv_item_number"
@@ -10,8 +11,17 @@
         android:layout_gravity="center_vertical|start"
         android:fontFamily="monospace"
         android:textSize="42sp"
-        xmlns:tools="http://schemas.android.com/tools"
         tools:text="#TOOLS TEXT"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_view_holder_instance"
+        android:layout_gravity="center_vertical|end"
+        android:fontFamily="monospace"
+        android:textColor="#000"
+        tools:text="ViewHolder instance: 7"
+        />
+
 </FrameLayout>
 
 

@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 //BEFORE PROCEEDING.
 //You had to complete the todos in the toy app
-
+//creating the menus
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +31,24 @@ public class MainActivity extends AppCompatActivity {
     private GreenAdapter mAdapter;
     private RecyclerView mNumberList;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //inflate
+        getMenuInflater().inflate(R.menu.main,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //if id is action_refresh setup new adapter setup call
+        int actionRefreshId = R.id.action_refresh;
+        if(item.getItemId()==actionRefreshId){
+            //setup new adapter from RecyclerView
+            mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+            mNumberList.setAdapter(mAdapter);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +74,8 @@ public class MainActivity extends AppCompatActivity {
          */
         mNumberList.setHasFixedSize(true);
 
-
         mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
         mNumberList.setAdapter(mAdapter);
-
-
 
     }
 

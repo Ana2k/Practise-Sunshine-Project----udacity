@@ -28,6 +28,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     private static final String TAG = GreenAdapter.class.getSimpleName();
 //    almost the only way i know how to make tags
     private int mNumberItems;
+    private static int viewHolderCount;
 
     /**
      * Constructor for GreenAdapter that accepts a number of items to display and the specifications f
@@ -36,11 +37,12 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
      * @param numberOfItems
      */
     public GreenAdapter(int numberOfItems){
-
+        viewHolderCount=0;
         mNumberItems = numberOfItems;
     }
 
-//NumberViewHolder
+
+
 
     /**
      *
@@ -64,6 +66,15 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 
         View view = inflater.inflate(itemLayout,viewGroup,shouldAttachToParentImmediately);
         NumberViewHolder viewHolder = new NumberViewHolder(view);
+
+        viewHolder.viewHolderIndex.setText("ViewHolder index: "+(viewHolderCount));
+        int backgroundColorForViewHolder = ColorUtils.getViewHolderBackgroundFromInstance(context,viewHolderCount);
+        viewHolder.itemView.setBackgroundColor(backgroundColorForViewHolder);
+        viewHolderCount+=1;
+
+        Log.d(TAG,"onCreateViewHolder: number of viewHolders created: "+viewHolderCount);
+
+
         return viewHolder;
     }
 
@@ -88,10 +99,12 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
      */
     public class NumberViewHolder extends RecyclerView.ViewHolder {
         private TextView listItemNumberView;
+        private TextView viewHolderIndex;
 
         public NumberViewHolder(@NonNull View itemView) {
             super(itemView);
             listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
+            viewHolderIndex = (TextView) itemView.findViewById(R.id.tv_view_holder_instance);
 
         }
 
@@ -101,6 +114,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
         void bind(int listIndex) {
            //a good example to know how to bind properly
             listItemNumberView.setText(String.valueOf(listIndex));
+
 //             Be careful to get the String representation of listIndex, as using setText with an int does something different
 
         }
@@ -112,3 +126,5 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 //    Adapter does not cache views associated with each item (that's the job of the ViewHolder class) nor does it recycle them; that’s what our RecyclerView does.
 //best recycler view synopsis i have seen so far
 //https://classroom.udacity.com/courses/ud851/lessons/c81cb722-d20a-495a-83c6-6890a6142aac/concepts/5432ad56-89fe-415c-8561-bca0b9a425dc
+
+
