@@ -1,6 +1,7 @@
 package com.example.sunshineapp;
 
 import android.content.Context;
+import android.location.GpsStatus;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,15 +31,24 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     private int mNumberItems;
     private static int viewHolderCount;
 
+    //how to add an interface here?
+    public interface ListItemClickListener{
+        void onListItemClickListener(int parameter);
+        //rename this parameter.
+    }
+    private ListItemClickListener mOnClickListener;
+
     /**
      * Constructor for GreenAdapter that accepts a number of items to display and the specifications f
      * for the ListItemClickListener
      *
      * @param numberOfItems
      */
-    public GreenAdapter(int numberOfItems){
+    public GreenAdapter(int numberOfItems,,ListItemClickListener listener){
         viewHolderCount=0;
         mNumberItems = numberOfItems;
+        mOnClickListener = listener;
+        //was putting this wrongly in the NumberViewHolder
     }
 
 
@@ -65,7 +75,8 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(itemLayout,viewGroup,shouldAttachToParentImmediately);
-        NumberViewHolder viewHolder = new NumberViewHolder(view);
+
+        NumberViewHolder viewHolder = new NumberViewHolder(view,mOnClickListener);
 
         viewHolder.viewHolderIndex.setText("ViewHolder index: "+(viewHolderCount));
         int backgroundColorForViewHolder = ColorUtils.getViewHolderBackgroundFromInstance(context,viewHolderCount);
@@ -97,7 +108,8 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     /**
      * Cache of children views for a list item
      */
-    public class NumberViewHolder extends RecyclerView.ViewHolder {
+    public class NumberViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+//        HOW TO IMPLEMENT A CLICK LISTENER here?
         private TextView listItemNumberView;
         private TextView viewHolderIndex;
 
@@ -105,7 +117,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
             super(itemView);
             listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
             viewHolderIndex = (TextView) itemView.findViewById(R.id.tv_view_holder_instance);
-
+            itemView.setOnClickListener(this);
         }
 
         /**
@@ -118,6 +130,19 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 //             Be careful to get the String representation of listIndex, as using setText with an int does something different
 
         }
+
+        // COMPLETED (6) Override onClick, passing the clicked item's position (getAdapterPosition()) to mOnClickListener via its onListItemClick method
+        /**
+         * Called whenever a user clicks on an item in the list.
+         * @param v The View that was clicked
+         */
+        //thhis i could not do so looking -- i did right...
+        @Override
+        public void onClick(View v) {
+            mOnClickListener.onListItemClickListener(getBindingAdapterPosition());
+            //can check out this post.
+//            https://stackoverflow.com/questions/63068519/getadapterposition-is-deprecated
+        }
     }
 }
 //For Layout Manager
@@ -126,5 +151,16 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 //    Adapter does not cache views associated with each item (that's the job of the ViewHolder class) nor does it recycle them; that’s what our RecyclerView does.
 //best recycler view synopsis i have seen so far
 //https://classroom.udacity.com/courses/ud851/lessons/c81cb722-d20a-495a-83c6-6890a6142aac/concepts/5432ad56-89fe-415c-8561-bca0b9a425dc
+//IN GREENADAPTER
+
+// TODO (1) Add an interface called ListItemClickListener
+// TODO (2) Within that interface, define a void method called onListItemClick that takes an int as a parameter
+// TODO (3) Create a final private ListItemClickListener called mOnClickListener
+// TODO (5) Implement OnClickListener in the NumberViewHolder class
+// TODO (7) Call setOnClickListener on the View passed into the constructor (use 'this' as the OnClickListener)
+
+// TODO (6) Override onClick, passing the clicked item's position (getAdapterPosition()) to mOnClickListener via its onListItemClick method
+
+// TODO (4) Add a ListItemClickListener as a parameter to the constructor and store it in mOnClickListener
 
 

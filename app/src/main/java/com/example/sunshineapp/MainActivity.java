@@ -85,3 +85,12 @@ public class MainActivity extends AppCompatActivity {
 //The toy app AsyncTask :)
 //https://github.com/udacity/ud851-Sunshine/blob/S02.01-Exercise-Networking/app/src/main/java/com/example/android/sunshine/MainActivity.java
 //The todos
+//MAIN ACTIVITY
+// TODO (8) Implement GreenAdapter.ListItemClickListener from the MainActivity
+// TODO (9) Create a Toast variable called mToast to store the current Toast
+// TODO (13) Pass in this as the ListItemClickListener to the GreenAdapter constructor
+// TODO (10) Override ListItemClickListener's onListItemClick method
+// TODO (11) In the beginning of the method, cancel the Toast if it isn't null
+// TODO (12) Show a Toast when an item is clicked, displaying that item number that was clicked
+// TODO (14) Pass in this as the ListItemClickListener to the GreenAdapter constructor
+
