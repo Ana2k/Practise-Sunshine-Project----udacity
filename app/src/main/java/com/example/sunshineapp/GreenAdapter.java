@@ -44,7 +44,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
      *
      * @param numberOfItems
      */
-    public GreenAdapter(int numberOfItems,,ListItemClickListener listener){
+    public GreenAdapter(int numberOfItems,ListItemClickListener listener){
         viewHolderCount=0;
         mNumberItems = numberOfItems;
         mOnClickListener = listener;
@@ -76,7 +76,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 
         View view = inflater.inflate(itemLayout,viewGroup,shouldAttachToParentImmediately);
 
-        NumberViewHolder viewHolder = new NumberViewHolder(view,mOnClickListener);
+        NumberViewHolder viewHolder = new NumberViewHolder(view);
 
         viewHolder.viewHolderIndex.setText("ViewHolder index: "+(viewHolderCount));
         int backgroundColorForViewHolder = ColorUtils.getViewHolderBackgroundFromInstance(context,viewHolderCount);

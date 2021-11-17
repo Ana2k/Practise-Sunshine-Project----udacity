@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 //creating the menus
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GreenAdapter.ListItemClickListener{
 
     private static final int NUM_LIST_ITEMS = 100;
+    private Toast mToast;
 
     /*References to RecyclerView and Adapter to reset the list
     when the reset menu item is clicked.
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         int actionRefreshId = R.id.action_refresh;
         if(item.getItemId()==actionRefreshId){
             //setup new adapter from RecyclerView
-            mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+            mAdapter = new GreenAdapter(NUM_LIST_ITEMS, this);
             mNumberList.setAdapter(mAdapter);
         }
         return super.onOptionsItemSelected(item);
@@ -74,12 +76,30 @@ public class MainActivity extends AppCompatActivity {
          */
         mNumberList.setHasFixedSize(true);
 
-        mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+        mAdapter = new GreenAdapter(NUM_LIST_ITEMS, this);
         mNumberList.setAdapter(mAdapter);
 
     }
 
 
+    @Override
+    public void onListItemClickListener(int clickedItemIndex) {
+        //show a toast when an item was clicked? how?
+        if(mToast!=null){
+            //HOW DO I CANCEL THE TOAST?
+            //simple just mToast.cancel
+            mToast.cancel();
+        }
+
+        String msg = "Item #"+clickedItemIndex+"clicked";
+        mToast = Toast.makeText(this,msg,Toast.LENGTH_SHORT);
+        mToast.show();
+        //like cancel is a standalone value is added to mToast instead
+
+        //way of writing a Toast.makeText(this,toastMessage,Toast.LENGTH_LONG);
+
+
+    }
 }
 //https://github.com/Ana2k/Practise-Sunshine-Project----udactiy/blob/toy_app_network/app/src/main/java/com/example/sunshineapp/MainActivity.java
 //The toy app AsyncTask :)
