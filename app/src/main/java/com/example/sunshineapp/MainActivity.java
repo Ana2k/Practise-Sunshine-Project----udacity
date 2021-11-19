@@ -23,11 +23,9 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
 //BEFORE PROCEEDING.
-//You had completed the last todo on this page
-//you had to run the app once check if there were any non committed commits.
-//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/c4aba829-2bb7-42a0-9214-42fef3534b93
-//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/d6dd3b5a-70c1-48ab-97d9-59ef9d10062f
-//rem two todos
+//You are supposed to complete the todos.
+//Create a View Holder and Adapter
+//Wire the RecyclerView up with the Adapter and the LinearLayoutManager
 
 public class MainActivity extends AppCompatActivity {
     private TextView mWeatherTextView,mErrorMessage;
