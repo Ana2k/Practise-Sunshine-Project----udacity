@@ -27,9 +27,6 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int NUM_LIST_ITEMS = 100;
-    //needed??
-
     private TextView mErrorMessageDisplay;
     private ProgressBar mProgressBar;
 
@@ -49,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 //        by default, if you don't specify an orientation, you get a vertical list.
 //                * In our case, we want a vertical list, so we don't need to pass in an orientation flag to
 //                * the LinearLayoutManager constructor.
-        mForecastAdapter = new ForecastAdapter();
+        mForecastAdapter = new ForecastAdapter(we_need_To_add_listener_here);
 
         /*
          * LinearLayoutManager can support HORIZONTAL or VERTICAL orientations. The reverse layout

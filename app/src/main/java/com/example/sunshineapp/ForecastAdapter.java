@@ -7,11 +7,23 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-//
+//a) why are we putting in a clickListener what is it supposed to do?
+//b) what was it doing in toy_app_rv even??
+
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHolder> {
 
     private String[] mWeatherData;
+    private ForecastAdapterOnClickHandler mClickHandler;
     //dont understand the root of this line yet
+
+    //add an interface in handling clicks in adapter
+    public interface ForecastAdapterOnClickHandler {
+        void onClick(String weatherForDay);
+    }
+    //constructor
+    public ForecastAdapter(ForecastAdapterOnClickHandler clickHandler){
+        mClickHandler = clickHandler;
+    }
 
 
     @NonNull
@@ -34,7 +46,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHol
         String weatherForThisDay = mWeatherData[position];
         //THIS WAS TOUG TO IMAGINE.
 
-        holder.bind(position,weatherForThisDay);
+        holder.bind(weatherForThisDay);
     }
 
     @Override
