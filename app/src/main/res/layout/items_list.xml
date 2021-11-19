@@ -13,6 +13,7 @@
         android:textSize="22sp" />
     <!--This View serves as a visual divider between list items-->
     <View
+        android:id="@+id/visual_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#dadada"
