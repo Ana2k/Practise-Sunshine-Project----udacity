@@ -15,14 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHolder> {
 
     private String[] mWeatherData;
-    private ForecastAdapterOnClickHandler mClickHandler;
+    private View.OnClickListener mClickHandler;
 
-    //add an interface in handling clicks in adapter
-    public interface ForecastAdapterOnClickHandler {
-        void onClickAdapter(String weatherForDay);
-    }
+
     //constructor
-    public ForecastAdapter(ForecastAdapterOnClickHandler clickHandler){
+    public ForecastAdapter(View.OnClickListener clickHandler){
         mClickHandler = clickHandler;
     }
 
@@ -35,10 +32,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHol
         LayoutInflater inflater = LayoutInflater.from(context);
 
         boolean shouldAttachToParentImmediately = false;
-        View view = inflater.inflate(layoutIdForListItem,parentViewGroup,shouldAttachToParentImmediately)
+        View view = inflater.inflate(layoutIdForListItem,parentViewGroup,shouldAttachToParentImmediately);
 
          ForecastAdapterViewHolder viewholder = new ForecastAdapterViewHolder(view,mWeatherData,mClickHandler);
-        mClickHandler =
         return viewholder;
 
     }
@@ -64,7 +60,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHol
     //Recycler View -- recycles
     //ViewHolder -- caches and reuses
 
-    //setWeatherData
     public void setWeatherData(String[] weatherData){
         mWeatherData = weatherData;
         notifyDataSetChanged();

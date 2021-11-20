@@ -10,17 +10,16 @@ public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implement
 {
     private TextView mWeatherTextView;
     private String[] mWeatherDataEach;
-    private ForecastAdapter.ForecastAdapterOnClickHandler mClickListener;
 
     //How to know what variables to attach
     //check the list layout file you are attaching the views
-    ForecastAdapterViewHolder(@NonNull View itemView, String[] mWeatherData, ForecastAdapter.ForecastAdapterOnClickHandler mClickHandler) {
+    public ForecastAdapterViewHolder(@NonNull View itemView, String[] mWeatherData, View.OnClickListener mClickListener) {
         super(itemView);
         mWeatherTextView = (TextView) itemView.findViewById(R.id.tv_weather_data);
         itemView.setOnClickListener(this);
         mWeatherDataEach = mWeatherData;
-        mClickListener = mClickHandler;
-        itemView.setOnClickListener(this);
+        itemView.setTag(this);
+        itemView.setOnClickListener(mClickListener);
 
     }
 
@@ -29,15 +28,6 @@ public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implement
         mWeatherTextView.setText(weatherForThisDay);
     }
 
-    public ForecastAdapterViewHolder(@NonNull View itemView) {
-        super(itemView);
-    }
-    @Override
-    public void onClick(View v) {
-        int adapterPosition = getBindingAdapterPosition();
-        String weatherForDay = mWeatherDataEach[adapterPosition];
-        mClickListener.onClickAdapter(weatherForDay);
-    }
 }
 //ViewHolder -- caches views
 // Specifically, it avoids frequent call of findViewById() during ListView scrolling

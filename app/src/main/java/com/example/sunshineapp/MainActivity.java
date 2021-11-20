@@ -21,11 +21,24 @@ import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
 //BEFORE PROCEEDING.
-//You are supposed to complete the todos.
-
-//Wire the RecyclerView up with the Adapter and the LinearLayoutManager
+//implement forecast adapters onClick
+//1) implements--
+//* one question do we implement the ForecastAdapterViewHolder or the ForecastAdapter
+//2)do something when the click occurs-- show the weather data contained in the click
+//3) override the onclick
+//4)pass in this as forecastadapteronClickHandler
+//but before all this SPLIT THE FILES!!
 
 public class MainActivity extends AppCompatActivity {
+    private View.OnClickListener onItemClickListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
+            int position = viewHolder.getBindingAdapterPosition();
+
+
+        }
+    };
 
     private TextView mErrorMessageDisplay;
     private ProgressBar mProgressBar;
