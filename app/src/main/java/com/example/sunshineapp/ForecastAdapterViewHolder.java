@@ -20,6 +20,7 @@ public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implement
         itemView.setOnClickListener(this);
         mWeatherDataEach = mWeatherData;
         mClickListener = mClickHandler;
+        itemView.setOnClickListener(this);
 
     }
 
@@ -28,6 +29,10 @@ public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implement
         mWeatherTextView.setText(weatherForThisDay);
     }
 
+    public ForecastAdapterViewHolder(@NonNull View itemView) {
+        super(itemView);
+    }
+    @Override
     public void onClick(View v) {
         int adapterPosition = getBindingAdapterPosition();
         String weatherForDay = mWeatherDataEach[adapterPosition];
