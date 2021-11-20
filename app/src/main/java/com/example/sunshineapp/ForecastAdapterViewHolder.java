@@ -9,14 +9,18 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {
     private TextView mWeatherTextView;
-    ForecastAdapter.ForecastAdapterOnClickHandler mClickListener;
+    private String[] mWeatherDataEach;
+    private ForecastAdapter.ForecastAdapterOnClickHandler mClickListener;
+
     //How to know what variables to attach
     //check the list layout file you are attaching the views
-
-    public ForecastAdapterViewHolder(@NonNull View itemView) {
+    ForecastAdapterViewHolder(@NonNull View itemView, String[] mWeatherData, ForecastAdapter.ForecastAdapterOnClickHandler mClickHandler) {
         super(itemView);
         mWeatherTextView = (TextView) itemView.findViewById(R.id.tv_weather_data);
         itemView.setOnClickListener(this);
+        mWeatherDataEach = mWeatherData;
+        mClickListener = mClickHandler;
+
     }
 
     //bind -- binds data to position in list
@@ -24,11 +28,10 @@ public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implement
         mWeatherTextView.setText(weatherForThisDay);
     }
 
-    @Override
     public void onClick(View v) {
         int adapterPosition = getBindingAdapterPosition();
-        //i dont think we need it?
-        mClickListener.onClick();
+        String weatherForDay = mWeatherDataEach[adapterPosition];
+        mClickListener.onClickAdapter(weatherForDay);
     }
 }
 //ViewHolder -- caches views

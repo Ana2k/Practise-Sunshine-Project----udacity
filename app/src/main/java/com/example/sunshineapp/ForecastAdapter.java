@@ -7,18 +7,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-//a) why are we putting in a clickListener what is it supposed to do?
-//b) what was it doing in toy_app_rv even??
+//so we have a clicklistener here in forecast adapter
+//and we are sending it to viewholder to extract the
+//binding adapter position
+//then
 
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHolder> {
 
     private String[] mWeatherData;
     private ForecastAdapterOnClickHandler mClickHandler;
-    //dont understand the root of this line yet
 
     //add an interface in handling clicks in adapter
     public interface ForecastAdapterOnClickHandler {
-        void onClick(String weatherForDay);
+        void onClickAdapter(String weatherForDay);
     }
     //constructor
     public ForecastAdapter(ForecastAdapterOnClickHandler clickHandler){
@@ -34,9 +35,11 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHol
         LayoutInflater inflater = LayoutInflater.from(context);
 
         boolean shouldAttachToParentImmediately = false;
-        View view = inflater.inflate(layoutIdForListItem,parentViewGroup,shouldAttachToParentImmediately);
+        View view = inflater.inflate(layoutIdForListItem,parentViewGroup,shouldAttachToParentImmediately)
 
-        return new ForecastAdapterViewHolder(view);
+         ForecastAdapterViewHolder viewholder = new ForecastAdapterViewHolder(view,mWeatherData,mClickHandler);
+        mClickHandler =
+        return viewholder;
 
     }
 
