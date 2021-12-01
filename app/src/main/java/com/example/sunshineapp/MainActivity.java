@@ -1,5 +1,6 @@
 package com.example.sunshineapp;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +27,7 @@ import java.net.URL;
 
 //Wire the RecyclerView up with the Adapter and the LinearLayoutManager
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler {
 
     private TextView mErrorMessageDisplay;
     private ProgressBar mProgressBar;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 //        by default, if you don't specify an orientation, you get a vertical list.
 //                * In our case, we want a vertical list, so we don't need to pass in an orientation flag to
 //                * the LinearLayoutManager constructor.
-        mForecastAdapter = new ForecastAdapter(we_need_To_add_listener_here);
+        mForecastAdapter = new ForecastAdapter(this);
 
         /*
          * LinearLayoutManager can support HORIZONTAL or VERTICAL orientations. The reverse layout
@@ -100,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClickAdapter(String weatherForDay) {
+        Context context = this;
+        Toast.makeText(context,weatherForDay,Toast.LENGTH_SHORT);
+    }
+
     private class LocationQueryTask extends AsyncTask<String, Void, String[]> {
 
         @Override
@@ -142,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 showErrorMessage();
             }
+            //mProgressBar and mForecastAdapter from other classes.
+            //we have to extract those to the new place
         }
     }
 

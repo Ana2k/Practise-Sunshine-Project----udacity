@@ -4,15 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 //so we have a clicklistener here in forecast adapter
 //and we are sending it to viewholder to extract the
 //binding adapter position
 //then
 
-public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHolder> {
+public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapterViewHolder> {
 
     private String[] mWeatherData;
     private ForecastAdapterOnClickHandler mClickHandler;
@@ -35,10 +37,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHol
         LayoutInflater inflater = LayoutInflater.from(context);
 
         boolean shouldAttachToParentImmediately = false;
-        View view = inflater.inflate(layoutIdForListItem,parentViewGroup,shouldAttachToParentImmediately)
+        View view = inflater.inflate(layoutIdForListItem,parentViewGroup, false);
 
-         ForecastAdapterViewHolder viewholder = new ForecastAdapterViewHolder(view,mWeatherData,mClickHandler);
-        mClickHandler =
+        ForecastAdapterViewHolder viewholder = new ForecastAdapterViewHolder(view);
         return viewholder;
 
     }
@@ -47,7 +48,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHol
     public void onBindViewHolder(@NonNull ForecastAdapterViewHolder holder, int position) {
         //Set the text of the TextView to the weather for this list item's position
         String weatherForThisDay = mWeatherData[position];
-        //THIS WAS TOUG TO IMAGINE.
+        //THIS WAS TOUGH TO IMAGINE.
 
         holder.bind(weatherForThisDay);
     }
@@ -60,15 +61,44 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHol
         return mWeatherData.length;
     }
 
+    public void setWeatherData(String[] weatherData) {
+        this.mWeatherData = weatherData;
+        notifyDataSetChanged();
+    }
+
     //Adapter -- connects
     //Recycler View -- recycles
     //ViewHolder -- caches and reuses
 
-    //setWeatherData
-    public void setWeatherData(String[] weatherData){
-        mWeatherData = weatherData;
-        notifyDataSetChanged();
+    public class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    {
+        private TextView mWeatherTextView;
+        private String[] mWeatherDataEach;
+        private ForecastAdapter.ForecastAdapterOnClickHandler mClickListener;
+
+        //How to know what variables to attach
+        //check the list layout file you are attaching the views
+        public ForecastAdapterViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mWeatherTextView = (TextView) itemView.findViewById(R.id.tv_weather_data);
+            itemView.setOnClickListener(this);
+
+        }
+
+        //bind -- binds data to position in list
+        void bind(String weatherForThisDay){
+            mWeatherTextView.setText(weatherForThisDay);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getBindingAdapterPosition();
+            String weatherForDay = mWeatherDataEach[adapterPosition];
+            mClickListener.onClickAdapter(weatherForDay);
+        }
     }
+
+
 
 }
 
@@ -77,4 +107,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapterViewHol
 // (that's the job of the ViewHolder class)
 // nor does it recycle them; that’s what our RecyclerView does.
 //ADAPTER -- connects views
+///VIEW HOLDER -- caches views
+//// Specifically, it avoids frequent call of findViewById() during ListView scrolling
+//// and that will make it smooth.
+//// so works according to what it is named--> View -- Holder like Cup--Holder
 
