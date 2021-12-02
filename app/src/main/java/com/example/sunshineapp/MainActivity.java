@@ -1,6 +1,7 @@
 package com.example.sunshineapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEditText;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -32,13 +33,18 @@ public class MainActivity extends AppCompatActivity {
         mEditText = (EditText) findViewById(R.id.et_text_entry);
 
         mCoolButton.setOnClickListener(new View.OnClickListener() {
+
+            String textEntered = mEditText.getText().toString();
             @Override
             public void onClick(View v) {
                 Context context = MainActivity.this;
-                String message = "Button clicked!\nTODO: Start a new Activity and pass some data.";
-                Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
+                Class destinationActivity = ChildActivity.class;
+                Intent childStartActivityIntent = new Intent(context,destinationActivity);
 
 
+                //putExtra
+                childStartActivityIntent.putExtra(Intent.EXTRA_TEXT,textEntered);
+                startActivity(childStartActivityIntent);
 
             }
         });
@@ -48,8 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
 //TODOs
 //see videos of intents and understand them
-//set up the initial file structure for the toy app
-//implement the toy app.
+//implement and run the toy app
 //similarly implement the intent in sunshine app.
 
 //FOR THE INITIAL SETUP

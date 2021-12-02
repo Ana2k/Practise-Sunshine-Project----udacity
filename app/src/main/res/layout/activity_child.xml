@@ -10,7 +10,8 @@
         android:text = "THIS IS THE DEFAULT TXT TO BE implemented in the app"
         android:id="@+id/tv_display"
         android:textSize="16sp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:visibility="visible"
         android:layout_height="wrap_content"/>
 
 </FrameLayout>

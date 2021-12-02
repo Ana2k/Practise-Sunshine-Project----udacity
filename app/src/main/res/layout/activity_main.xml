@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
     <EditText
         android:id="@+id/et_text_entry"
         android:layout_width="match_parent"
+        tools:text = "Enter a text"
+        android:hint="ENTER TEXT TO BE SHOWN"
         android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/b_do_sth_cool"
-        android:layout_width="match_parent"
+        android:text="PRESS ME!"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
 
