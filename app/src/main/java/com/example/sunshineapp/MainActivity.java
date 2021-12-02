@@ -34,12 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
         mCoolButton.setOnClickListener(new View.OnClickListener() {
 
-            String textEntered = mEditText.getText().toString();
+
             @Override
             public void onClick(View v) {
                 Context context = MainActivity.this;
                 Class destinationActivity = ChildActivity.class;
                 Intent childStartActivityIntent = new Intent(context,destinationActivity);
+                String textEntered = mEditText.getText().toString();
 
 
                 //putExtra
