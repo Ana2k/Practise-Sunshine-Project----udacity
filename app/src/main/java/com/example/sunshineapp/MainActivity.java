@@ -33,11 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
     }
-
-    /**
-     * When open website button is clicked
-     * @param v
-     */
     public void onClickOpenWebPageButton(View v){
        String webUrl = "https://developer.android.com/guide/components/intents-common";
        openWebPage(webUrl);
@@ -120,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 //                .setType(mimeType)
 //                .setChooserTitle(title)
 //                .setText(textToShare)
-//                .startChooser();
+//                .startChooser(); this wont ask you the app type to oppen createChooserIntent will
 
     }
     public void capturePhoto(){
