@@ -23,11 +23,10 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
 //BEFORE PROCEEDING.
-//You had completed the last todo on this page
-//you had to run the app once check if there were any non committed commits.
-//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/c4aba829-2bb7-42a0-9214-42fef3534b93
-//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/d6dd3b5a-70c1-48ab-97d9-59ef9d10062f
-//rem two todos
+//Todos
+//update to the current condition of the master branch
+//https://classroom.udacity.com/courses/ud851/lessons/5a9d75c2-eb50-4a06-b1ed-b30645f27fdf/concepts/859f2ea4-ff3a-4c83-bff2-2be04c82949e
+//implement these and the next 3
 
 public class MainActivity extends AppCompatActivity {
     private TextView mWeatherTextView,mErrorMessage;
