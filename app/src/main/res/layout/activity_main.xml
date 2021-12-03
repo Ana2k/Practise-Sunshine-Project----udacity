@@ -5,36 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_forecast"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/tv_error_message_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/error_message"
+        android:textSize="20sp"
+        android:visibility="invisible" />
 
-        <TextView
-            android:id="@+id/tv_weather_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textSize="20sp" />
-    </ScrollView>
-        <TextView
-            android:id="@+id/tv_error_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/error_message"
-            android:visibility="invisible"
-            android:padding="16dp"
-            android:textSize="20sp" />
-        <ProgressBar
-            android:id="@+id/pb_loading_bar"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_gravity="center"
-            android:visibility="invisible"/>
+    <ProgressBar
+        android:id="@+id/pb_loading_indicator"
+        android:layout_height="42dp"
+        android:layout_width="42dp"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
 </FrameLayout>
-<!-- The difference is that padding determines space within the boundaries of the view, and layout_margin determines the space outside the boundaries of the view-->
-
-<!--good with quick layout revision -->
-    <!--sthh about layouts being containerview or viewgroups-&#45;&#45;home for other views-->
-<!--sth also about android - widgets-->
-<!--sth aboout a chronometer&#45;&#45;simple timer on screen-->
+<!--TODO1 - shift all the content to number_item_list-->
+<!--TODO2- recycler view added to activity main-->
