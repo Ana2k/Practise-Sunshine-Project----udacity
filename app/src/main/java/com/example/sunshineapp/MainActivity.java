@@ -1,7 +1,10 @@
 package com.example.sunshineapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,128 +12,123 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 
-import com.example.sunshineapp.data.SunshinePreferences;
-import com.example.sunshineapp.utilities.NetworkUtils;
-import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
-import com.example.sunshineapp.utilities.SunshineWeatherUtils;
-
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
 //BEFORE PROCEEDING.
-//You had completed the last todo on this page
-//you had to run the app once check if there were any non committed commits.
-//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/c4aba829-2bb7-42a0-9214-42fef3534b93
-//https://classroom.udacity.com/courses/ud851/lessons/e5d74e43-743c-455e-9a70-7545a2da9783/concepts/d6dd3b5a-70c1-48ab-97d9-59ef9d10062f
-//rem two todos
+//https://developer.android.com/guide/components/intents-common
+//for common intents used
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mWeatherTextView,mErrorMessage;
-    private ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWeatherTextView = (TextView) findViewById(R.id.tv_weather_data);
-        mErrorMessage = (TextView) findViewById(R.id.tv_error_message);
-        mProgressBar = (ProgressBar) findViewById(R.id.pb_loading_bar);
 
-        loadWeatherData();
-    }
-    void loadWeatherData(){
-        //added later
-        showJsonDataView();
-        String location = SunshinePreferences.getPreferredWeatherLocation(getBaseContext());
-
-        new LocationQueryTask().execute(location);
-        //foramtted for further lessons where we take user input presumably
-    }
-    public void showJsonDataView(){
-        //mErrorMessage invisbile and mSearchResults visible
-        mErrorMessage.setVisibility(View.INVISIBLE);
-        mWeatherTextView.setVisibility(View.VISIBLE);
-    }
-    public void showErrorMessage(){
-        mErrorMessage.setVisibility(View.VISIBLE);
-        mWeatherTextView.setVisibility(View.INVISIBLE);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_refresh,menu);
-        return true;
+    /**
+     * When open website button is clicked
+     * @param v
+     */
+    public void onClickOpenWebPageButton(View v){
+       String webUrl = "https://developer.android.com/guide/components/intents-common";
+       openWebPage(webUrl);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int idMenuSelected = item.getItemId();
-        if(idMenuSelected == R.id.action_refresh){
-            mWeatherTextView.setText("");
-            loadWeatherData();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void onClickOpenAddressMapButton(View v){
+        String addressString = "1600 Amphitheatre Parkway, Mountain View,CA";
+        Uri.Builder builder= new Uri.Builder();
+        Uri addressUri = builder.scheme("geo")
+                .path("0.0")
+                .appendQueryParameter("q",addressString)
+                .build();
+        //for understanding the above lines:---
+        //Data URI Scheme heading in Android Common Intents developer page
+        showMap(addressUri);
+
+    }
+    public void onClickShareTextButton(View v)
+    {
+        String textToShare = "Text t0 share";
+        shareText(textToShare);
+
     }
 
-    private class LocationQueryTask extends AsyncTask<String,Void, String[]> {
+    public void createYourOwn(View v){
+        //StillImageCamera
+//        Toast.makeText(getApplicationContext(),"ODO: CREATE YOUR OWN IMPLICIT INTENT",
+//                Toast.LENGTH_LONG).show();
+        capturePhoto();
+    }
 
-        @Override
-        protected String[] doInBackground(String... parameters) {
-            //first we check wether parameter has any value
-            if (parameters.length==0){
-                //no data has been passed.
-                Log.d("Main - doInBackground","PARAM LENGTH IS NULL");
-                return null;
-            }
-            /* If there's no zip code, there's nothing to look up. */
-            String location = parameters[0];
-            URL weatherRequestURL = NetworkUtils.buildURL(location);
-
-            try{
-                String weatherSearchResponse = NetworkUtils.getResponseHttpUrl(weatherRequestURL);
-                String[] simpleJsonWeatherData = OpenWeatherJsonUtils.getSimpleWeatherStringsfromJson(getApplicationContext(),weatherSearchResponse);
-                return simpleJsonWeatherData;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mProgressBar.setVisibility(View.VISIBLE);
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String[] weatherResponses) {
-            mProgressBar.setVisibility(View.INVISIBLE);
-            if(weatherResponses != null){
-                showJsonDataView();
-                /*
-                 * Iterate through the array and append the Strings to the TextView. The reason why we add
-                 * the "\n\n\n" after the String is to give visual separation between each String in the
-                 * TextView. Later, we'll learn about a better way to display lists of data.
-                 */
-
-                for(String weatherResponse : weatherResponses){
-                mWeatherTextView.append(weatherResponse+"\n\n\n");
-                }
-            }
-            else{
-                showErrorMessage();
-            }
+    //HELPER FUNCTIONS:--
+    //picked from the common intents developer.android page.
+    public void openWebPage(String url){
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW,webpage);
+        if(intent.resolveActivity(getPackageManager())!=null){
+            startActivity(intent);
         }
     }
+    public void showMap(Uri addressUri){
+        Intent intent = new  Intent(Intent.ACTION_VIEW);
+        intent.setData(addressUri);
+        if(intent.resolveActivity(getPackageManager())!=null){
+            startActivity(intent);
+        }
+    }
+    public void shareText(String textToShare){
+        //https://developer.android.com/reference/androidx/core/app/ShareCompat.IntentBuilder
+
+        /* This is just the title of the window that will pop up when we call startActivity */
+        String chooserTitle = "Learning How to Share";
+
+        /*
+         * You can think of MIME types similarly to file extensions. They aren't the exact same,
+         * but MIME types help a computer determine which applications can open which content. For
+         * example, if you double click on a .pdf file, you will be presented with a list of
+         * programs that can open PDFs. Specifying the MIME type as text/plain has a similar affect
+         * on our implicit Intent. With text/plain specified, all apps that can handle text content
+         * in some way will be offered when we call startActivity on this particular Intent.
+         */
+        String mimeType = "text/plain";
+
+        //niyati.com/blog/android-sharecompat/
+        //like this blog way more
+        ShareCompat.IntentBuilder intentBuilder = ShareCompat.IntentBuilder.from(this);
+        Intent intent = intentBuilder
+                .setType(mimeType)
+                .setChooserTitle(chooserTitle)
+                .setText(textToShare)
+                .createChooserIntent();
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+//        what they wrote
+//        ShareCompat.IntentBuilder
+//                /* The from method specifies the Context from which this share is coming from */
+//                .from(this)
+//                .setType(mimeType)
+//                .setChooserTitle(title)
+//                .setText(textToShare)
+//                .startChooser();
+
+    }
+    public void capturePhoto(){
+        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+        if (intent.resolveActivity(getPackageManager())!=null){
+            startActivity(intent);
+        }
+    }
+
+
 }
-//https://github.com/Ana2k/Practise-Sunshine-Project----udactiy/blob/toy_app_network/app/src/main/java/com/example/sunshineapp/MainActivity.java
-//The toy app AsyncTask :)
-//https://github.com/udacity/ud851-Sunshine/blob/S02.01-Exercise-Networking/app/src/main/java/com/example/android/sunshine/MainActivity.java
-//The todos

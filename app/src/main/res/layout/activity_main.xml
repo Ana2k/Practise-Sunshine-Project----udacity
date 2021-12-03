@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--    https://classroom.udacity.com/courses/ud851/lessons/93affc67-3f0b-4f9b-b3a4-a7a26f241a86/concepts/cdbfd437-de24-4903-8f01-37c29427cb38-->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp"
     tools:context=".MainActivity">
 
-    <ScrollView
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="onClickOpenWebPageButton"
+        android:text="Open Website"/>
 
-        <TextView
-            android:id="@+id/tv_weather_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textSize="20sp" />
-    </ScrollView>
-        <TextView
-            android:id="@+id/tv_error_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/error_message"
-            android:visibility="invisible"
-            android:padding="16dp"
-            android:textSize="20sp" />
-        <ProgressBar
-            android:id="@+id/pb_loading_bar"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_gravity="center"
-            android:visibility="invisible"/>
-</FrameLayout>
-<!-- The difference is that padding determines space within the boundaries of the view, and layout_margin determines the space outside the boundaries of the view-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="onClickOpenAddressMapButton"
+        android:text="Open Location in Map"/>
 
-<!--good with quick layout revision -->
-    <!--sthh about layouts being containerview or viewgroups-&#45;&#45;home for other views-->
-<!--sth also about android - widgets-->
-<!--sth aboout a chronometer&#45;&#45;simple timer on screen-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="onClickShareTextButton"
+        android:text="Share Text Content"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="createYourOwn"
+        android:text="Create Your Own -- Surprise"/>
+
+</LinearLayout>
