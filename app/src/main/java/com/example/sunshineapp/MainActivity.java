@@ -107,11 +107,11 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
     @Override
     public void onClick(String weatherForDay) {
-//        Context context = MainActivity.this;
-//        Class destinationActivity = DetailActivity.class;
-//        Intent childStartActivity = new Intent(context,destinationActivity);
-        //Toast.makeText(context,weatherForDay,Toast.LENGTH_SHORT);
-        Intent childStartActivity = new Intent(MainActivity.this,DetailActivity.class);
+        Context context = MainActivity.this;
+        Class destinationActivity = DetailActivity.class;
+        Intent childStartActivityIntent = new Intent(context,destinationActivity);
+        childStartActivityIntent.putExtra(Intent.EXTRA_TEXT,weatherForDay);
+        startActivity(childStartActivityIntent);
 
         //Explicit intent to start DetailsActivity
     }
