@@ -5,12 +5,17 @@ import androidx.core.app.ShareCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
     private static final String FORECAST_SHARE_HASHTAG = "#SunshineApp";
     private TextView mDisplayDetails;
     private String mForecast;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +29,26 @@ public class DetailActivity extends AppCompatActivity {
             mDisplayDetails.setText(mForecast);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.detail,menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+        menuItem.setIntent(createForecastIntent());
+        return true;
+    }
+
+    private Intent createForecastIntent() {
+        Intent shareIntent = ShareCompat.IntentBuilder
+                .from(this)
+                .setType("text/plain")
+                .setText(mForecast+FORECAST_SHARE_HASHTAG)
+                .createChooserIntent();
+        return shareIntent;
+    }
+
 }
 
 //FOR SHARE.
@@ -42,13 +67,13 @@ public class DetailActivity extends AppCompatActivity {
 //        if (intent.resolveActivity(getPackageManager()) != null) {
 //                startActivity(intent);
 //                }
-//FOR MAP
-//String addressString = "1600 Amphitheatre Parkway, Mountain View,CA";
-//        Uri.Builder builder= new Uri.Builder();
-//        Uri addressUri = builder.scheme("geo")
-//                .path("0.0")
-//                .appendQueryParameter("q",addressString)
-//                .build();
-//        //for understanding the above lines:---
-//        //Data URI Scheme heading in Android Common Intents developer page
-//        showMap(addressUri);
+/**
+ * This method uses the URI scheme for showing a location found on a
+ * map. This super-handy intent is detailed in the "Common Intents"
+ * page of Android's developer site:
+ *
+ * @see <a"http://developer.android.com/guide/components/intents-common.html#Maps">
+ *
+ * Hint: Hold Command on Mac or Control on Windows and click that link
+ * to automagically open the Common Intents page
+ */

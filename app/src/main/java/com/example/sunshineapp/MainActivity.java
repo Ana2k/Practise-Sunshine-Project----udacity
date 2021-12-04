@@ -2,6 +2,7 @@ package com.example.sunshineapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,13 +25,23 @@ import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
 import java.net.URL;
 //BEFORE PROCEEDING.
 //Todos
-//update to the current condition of the master branch
-//https://classroom.udacity.com/courses/ud851/lessons/5a9d75c2-eb50-4a06-b1ed-b30645f27fdf/concepts/859f2ea4-ff3a-4c83-bff2-2be04c82949e
-//implement these and the next 3
+////https://github.com/udacity/ud851-Sunshine/commit/4f2b9d6edfc8ff219be873428e624c969f1e4d48?diff=split
+// just this one with its implicit intents.
 
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler {
 
+
+    /**
+     * gets the "simple name" of the class MainActivity, which happens to be "MainActivity". One could just write
+     *
+     * private static final String TAG = "MainActivity";
+     *
+     * as well, but if you later decide to rename the class, y
+     * ou'll have to take care to also change that string constant because
+     * no compiler will tell you if you forget it.
+     */
+    private static final String TAG = MainActivity.class.getSimpleName();
     private TextView mErrorMessageDisplay;
     private ProgressBar mProgressBar;
 
@@ -98,15 +108,31 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         int idMenuSelected = item.getItemId();
         if (idMenuSelected == R.id.action_refresh) {
             mForecastAdapter.setWeatherData(null);
-
             loadWeatherData();
             return true;
         }
-        if (idMenuSelected==R.id.action_show_map){
-
-
+        if (idMenuSelected==R.id.action_map){
+            openLocationMap();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openLocationMap() {
+        String addressString = "1600 Ampitheatre Parkway, CA";
+        //Hardcoded Address here we were having some trouble
+        //We can use Uri.parse bcs we have a generic idea of how geolocations should work like
+        Uri geolocation = Uri.parse("geo:0,0?q="+addressString);
+        //checkout https://developer.android.com/guide/components/intents-common#Maps
+        //for more info
+        Intent intent  = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geolocation);
+        if (intent.resolveActivity(getPackageManager())!=null){
+            startActivity(intent);
+        }
+        else{
+            Log.d(TAG,"Could not call "+geolocation.toString()+"No recieving apps maybe installed.");
+        }
     }
 
     @Override
