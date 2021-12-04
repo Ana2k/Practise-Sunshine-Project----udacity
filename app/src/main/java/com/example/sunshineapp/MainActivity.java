@@ -25,8 +25,12 @@ import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
 import java.net.URL;
 //BEFORE PROCEEDING.
 //Todos
-////https://github.com/udacity/ud851-Sunshine/commit/4f2b9d6edfc8ff219be873428e624c969f1e4d48?diff=split
-// just this one with its implicit intents.
+//some error in the recyclerview files.
+//https://classroom.udacity.com/courses/ud851/lessons/ed13cc93-2861-43bf-b7ed-395a166ab975/concepts/a7da9a33-219c-4b9b-9c01-cccaf51583e8
+//next
+//todo this
+
+//https://github.com/udacity/ud851-Sunshine/blob/student/S04.03-Solution-AddMapAndSharing/app/src/main/java/com/example/android/sunshine/ForecastAdapter.java#L80
 
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler {
@@ -136,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     }
 
     @Override
-    public void onClick(String weatherForDay) {
+    public void OnClik(String weatherForDay) {
         Context context = MainActivity.this;
         Class destinationActivity = DetailActivity.class;
         Intent childStartActivityIntent = new Intent(context,destinationActivity);
@@ -144,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         startActivity(childStartActivityIntent);
 
         //Explicit intent to start DetailsActivity
+
     }
 
     private class LocationQueryTask extends AsyncTask<String, Void, String[]> {
