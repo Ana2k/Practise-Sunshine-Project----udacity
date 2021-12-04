@@ -1,6 +1,7 @@
 package com.example.sunshineapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -105,9 +106,14 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     }
 
     @Override
-    public void onClickAdapter(String weatherForDay) {
-        Context context = this;
-        Toast.makeText(context,weatherForDay,Toast.LENGTH_SHORT);
+    public void onClick(String weatherForDay) {
+//        Context context = MainActivity.this;
+//        Class destinationActivity = DetailActivity.class;
+//        Intent childStartActivity = new Intent(context,destinationActivity);
+        //Toast.makeText(context,weatherForDay,Toast.LENGTH_SHORT);
+        Intent childStartActivity = new Intent(MainActivity.this,DetailActivity.class);
+
+        //Explicit intent to start DetailsActivity
     }
 
     private class LocationQueryTask extends AsyncTask<String, Void, String[]> {

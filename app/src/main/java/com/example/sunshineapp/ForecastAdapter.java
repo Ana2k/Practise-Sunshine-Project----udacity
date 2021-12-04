@@ -21,7 +21,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     //add an interface in handling clicks in adapter
     public interface ForecastAdapterOnClickHandler {
-        void onClickAdapter(String weatherForDay);
+        void onClick(String weatherForDay);
     }
     //constructor
     public ForecastAdapter(ForecastAdapterOnClickHandler clickHandler){
@@ -37,7 +37,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         LayoutInflater inflater = LayoutInflater.from(context);
 
         boolean shouldAttachToParentImmediately = false;
-        View view = inflater.inflate(layoutIdForListItem,parentViewGroup, false);
+        View view = inflater.inflate(layoutIdForListItem,parentViewGroup, shouldAttachToParentImmediately);
 
         ForecastAdapterViewHolder viewholder = new ForecastAdapterViewHolder(view);
         return viewholder;
@@ -92,9 +92,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
         @Override
         public void onClick(View v) {
-            int adapterPosition = getBindingAdapterPosition();
+            int adapterPosition = getAdapterPosition();
             String weatherForDay = mWeatherDataEach[adapterPosition];
-            mClickListener.onClickAdapter(weatherForDay);
+            mClickListener.onClick(weatherForDay);
         }
     }
 
