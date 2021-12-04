@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
-
+    private static final String FORECAST_SHARE_HASHTAG = "#SunshineApp";
     private TextView mDisplayDetails;
     private String mForecast;
     @Override
