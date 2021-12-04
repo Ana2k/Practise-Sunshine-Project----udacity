@@ -102,6 +102,10 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             loadWeatherData();
             return true;
         }
+        if (idMenuSelected==R.id.action_show_map){
+
+
+        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -1,6 +1,7 @@
 package com.example.sunshineapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,3 +25,30 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 }
+
+//FOR SHARE.
+//    String chooserTitle = "Learning How to Share";
+//
+//
+//    //niyati.com/blog/android-sharecompat/
+//    //like this blog way more
+//    ShareCompat.IntentBuilder intentBuilder = ShareCompat.IntentBuilder.from(this);
+//    Intent intent = intentBuilder
+//            .setType(mimeType)
+//            .setChooserTitle(chooserTitle)
+//            .setText(textToShare)
+//            .createChooserIntent();
+//
+//        if (intent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(intent);
+//                }
+//FOR MAP
+//String addressString = "1600 Amphitheatre Parkway, Mountain View,CA";
+//        Uri.Builder builder= new Uri.Builder();
+//        Uri addressUri = builder.scheme("geo")
+//                .path("0.0")
+//                .appendQueryParameter("q",addressString)
+//                .build();
+//        //for understanding the above lines:---
+//        //Data URI Scheme heading in Android Common Intents developer page
+//        showMap(addressUri);
