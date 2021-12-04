@@ -51,29 +51,3 @@ public class DetailActivity extends AppCompatActivity {
 
 }
 
-//FOR SHARE.
-//    String chooserTitle = "Learning How to Share";
-//
-//
-//    //niyati.com/blog/android-sharecompat/
-//    //like this blog way more
-//    ShareCompat.IntentBuilder intentBuilder = ShareCompat.IntentBuilder.from(this);
-//    Intent intent = intentBuilder
-//            .setType(mimeType)
-//            .setChooserTitle(chooserTitle)
-//            .setText(textToShare)
-//            .createChooserIntent();
-//
-//        if (intent.resolveActivity(getPackageManager()) != null) {
-//                startActivity(intent);
-//                }
-/**
- * This method uses the URI scheme for showing a location found on a
- * map. This super-handy intent is detailed in the "Common Intents"
- * page of Android's developer site:
- *
- * @see <a"http://developer.android.com/guide/components/intents-common.html#Maps">
- *
- * Hint: Hold Command on Mac or Control on Windows and click that link
- * to automagically open the Common Intents page
- */
