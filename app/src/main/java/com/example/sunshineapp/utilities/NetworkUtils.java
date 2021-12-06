@@ -4,90 +4,59 @@ import android.net.Uri;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class NetworkUtils {
-    //URLS
-    private static final String TAG = NetworkUtils.class.getSimpleName();
-    private static final String DYNAMIC_WEATHER_URL = "https://andfun-weather.udacity.com/weather";
-    private static final String STATIC_WEATHER_URL = "https://andfun-weather.udacity.com/staticweather";
+import javax.net.ssl.HttpsURLConnection;
 
-    private static final String FORECAST_BASE_URL = STATIC_WEATHER_URL;
+public class NetworkUtils {
+    final static String GITHUB_BASE_URL =
+            "https://api.github.com/search/repositories";
+
+    final static String PARAM_QUERY = "q";
 
     /*
-     * NOTE: These values only effect responses from OpenWeatherMap, NOT from the fake weather
-     * server. They are simply here to allow us to teach you how to build a URL if you were to use
-     * a real API.If you want to connect your app to OpenWeatherMap's API, feel free to! However,
-     * we are not going to show you how to do so in this course.
+     * The sort field. One of stars, forks, or updated.
+     * Default: results are sorted by best match if no field is specified.
      */
+    final static String PARAM_SORT = "sort";
+    final static String sortBy = "stars";
 
-    /* The format we want our API to return */
-    private static final String format = "json";
-    /* The units we want our API to return */
-    private static final String units = "metric";
-    /* The number of days we want our API to return */
-    private static final int numDays = 14;
-
-    final static String QUERY_PARAM = "q";
-    final static String LAT_PARAM = "lat";
-    final static String LON_PARAM = "lon";
-    final static String FORMAT_PARAM = "mode";
-    final static String UNITS_PARAM = "units";
-    final static String DAYS_PARAM = "cnt";
-
-    public static URL buildURL(String locationQuery){
-        //as seen from toy_app_network
-        //https://github.com/Ana2k/Practise-Sunshine-Project----udactiy/blob/toy_app_network/app/src/main/java/com/example/sunshineapp/utilities/NetworkUtils.java
-
-        Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                .appendQueryParameter(QUERY_PARAM,locationQuery)
-                .appendQueryParameter(FORMAT_PARAM,format)
-                .appendQueryParameter(UNITS_PARAM,units)
-                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays)).build();
-//        appendQueryParameter. Encodes the key and value and then appends the parameter to the query string
+    //buildUrl
+    public static URL buildUrl(String githubSearchQuery){
+        Uri builtUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
+                .appendQueryParameter(PARAM_QUERY,githubSearchQuery)
+                .appendQueryParameter(PARAM_SORT,githubSearchQuery)
+                .build();
 
         URL url = null;
         try{
             url = new URL(builtUri.toString());
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-//        Log.v(TAG, "Built URI " + url); -- for debug
-
         return url;
     }
-
-    public static URL buildURL(Double lat, Double lon){
-
-        return null;
-    }
-
-    /**
-     * Returns the entire result from HTTP response
-     *
-     * @param url - fetches HTTP response form
-     * @return
-     * @throws IOException
-     */
-    public static String getResponseHttpUrl(URL url) throws IOException {
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        try {
+    public static String getResponseFromHttpUtl(URL url) throws IOException{
+        HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
+        try{
             InputStream in = urlConnection.getInputStream();
 
             Scanner scanner = new Scanner(in);
             scanner.useDelimiter("\\A");
-
+            //\A - The beginning of the input
+//            https://stackoverflow.com/questions/58102714/what-does-the-a-delimiter-do-in-the-following-http-request-code
             boolean hasInput = scanner.hasNext();
-            if (hasInput) {
+            if (hasInput){
                 return scanner.next();
-            } else {
+            }
+            else{
                 return null;
             }
-        } finally {
+        }finally {
             urlConnection.disconnect();
-        }//samme code as toy_app_network :)
+        }
     }
 }

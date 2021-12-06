@@ -1,193 +1,138 @@
 package com.example.sunshineapp;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sunshineapp.data.SunshinePreferences;
 import com.example.sunshineapp.utilities.NetworkUtils;
-import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
-//BEFORE PROCEEDING.
 
-public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler {
 
+public class MainActivity extends AppCompatActivity {
+    private TextView mSearchResultsTextView, mErrorMessageDisplay, mUrlDisplayTextView;
+    private EditText mSearchboxEditText;
+    private ProgressBar mLoadingIndicator;
 
     /**
      * gets the "simple name" of the class MainActivity, which happens to be "MainActivity". One could just write
-     *
+     * <p>
      * private static final String TAG = "MainActivity";
-     *
+     * <p>
      * as well, but if you later decide to rename the class, y
      * ou'll have to take care to also change that string constant because
      * no compiler will tell you if you forget it.
      */
     private static final String TAG = MainActivity.class.getSimpleName();
-    private TextView mErrorMessageDisplay;
-    private ProgressBar mProgressBar;
-
-    private ForecastAdapter mForecastAdapter;
-    private RecyclerView mRecycleView;
 
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mRecycleView = (RecyclerView) findViewById(R.id.recyclerview_forecast);
+        //setup vars
+        mSearchResultsTextView = (TextView) findViewById(R.id.tv_github_search_results_json);
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
-        mProgressBar = (ProgressBar) findViewById(R.id.pb_loading_indicator);
-        //LinearLayoutManager
-        //by default, if you don't specify an orientation, you get a vertical list.
-        //* In our case, we want a vertical list, so we don't need to pass in an orientation flag to
-        //* the LinearLayoutManager constructor.
-        mForecastAdapter = new ForecastAdapter(this);
+        mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
 
-        /*
-         * LinearLayoutManager can support HORIZONTAL or VERTICAL orientations. The reverse layout
-         * parameter is useful mostly for HORIZONTAL layouts that should reverse for right to left
-         * languages.
-         */
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecycleView.setLayoutManager(layoutManager);
-        mRecycleView.setHasFixedSize(true);
-        mRecycleView.setAdapter(mForecastAdapter);
-//        Use setHasFixedSize(true) on mRecyclerView to designate that all items in the list will have the same size
-        loadWeatherData();
+        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        mSearchboxEditText = (EditText) findViewById(R.id.et_search_box);
     }
 
-    void loadWeatherData() {
-        //added later
-        showJsonDataView();
-        String location = SunshinePreferences.getPreferredWeatherLocation(getBaseContext());
+    /**
+     * This method retrieves the search text from the EditText, constructs the
+     * URL (using {@link NetworkUtils}) for the github repository you'd like to find, displays
+     * that URL in a TextView, and finally fires off an AsyncTask to perform the GET request using
+     * our {@link GithubQueryTask}
+     */
+    private void makeGithubSearchQuery(){
+        String githubQuery = mSearchboxEditText.getText().toString();
+        URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
+        mUrlDisplayTextView.setText(githubSearchUrl.toString());
 
-        new LocationQueryTask().execute(location);
-        //foramtted for further lessons where we take user input presumably
+        //AsyncTask
+        new GithubQueryTask().execute(githubSearchUrl);
+
+
     }
 
-    public void showJsonDataView() {
-        //mErrorMessage invisbile and mSearchResults visible
-        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        mRecycleView.setVisibility(View.VISIBLE);
+
+    private class GithubQueryTask extends AsyncTask<URL, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //loadingindicator is visible
+            mLoadingIndicator.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(String githubSearchResults) {
+
+
+            //if data is not null show it by setting text
+            // else showErrorMessage.
+            mLoadingIndicator.setVisibility(View.INVISIBLE);
+            if((githubSearchResults!=null) && !githubSearchResults.equals("")){
+                showJsonDataView();
+                mSearchResultsTextView.setText(githubSearchResults);
+            }
+            else{
+                showErrorMessage();
+            }
+
+
+        }
+
+        @Override
+        protected String doInBackground(URL... urls) {
+            //takes out the data using NetworkUtils.getReponseFromHttpUrl
+            //
+            URL searchUrl = urls[0];
+            String githubSearchResults = null;
+            try{
+                githubSearchResults = NetworkUtils.getResponseFromHttpUtl(searchUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return githubSearchResults;
+
+        }
     }
 
-    public void showErrorMessage() {
+    private void showErrorMessage() {
+        //the error result is visible the search string gets non visible
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
-        mRecycleView.setVisibility(View.INVISIBLE);
+        mSearchResultsTextView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showJsonDataView() {
+        //the search result is visible the error string gets non visible
+        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
+        mSearchResultsTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_refresh, menu);
+        getMenuInflater().inflate(R.menu.main,menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int idMenuSelected = item.getItemId();
-        if (idMenuSelected == R.id.action_refresh) {
-            mForecastAdapter.setWeatherData(null);
-            loadWeatherData();
-            return true;
-        }
-        if (idMenuSelected==R.id.action_map){
-            openLocationMap();
+        if(item.getItemId()==R.id.action_search){
+            makeGithubSearchQuery();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void openLocationMap() {
-        String addressString = "1600 Ampitheatre Parkway, CA";
-        //Hardcoded Address here we were having some trouble
-        //We can use Uri.parse bcs we have a generic idea of how geolocations should work like
-        Uri geolocation = Uri.parse("geo:0,0?q="+addressString);
-        //checkout https://developer.android.com/guide/components/intents-common#Maps
-        //for more info
-        Intent intent  = new Intent(Intent.ACTION_VIEW);
-        intent.setData(geolocation);
-        if (intent.resolveActivity(getPackageManager())!=null){
-            startActivity(intent);
-        }
-        else{
-            Log.d(TAG,"Could not call "+geolocation.toString()+"No recieving apps maybe installed.");
-        }
-    }
-
-    @Override
-    public void OnClik(String weatherForDay) {
-        Context context = MainActivity.this;
-        Class destinationActivity = DetailActivity.class;
-        Intent childStartActivityIntent = new Intent(context,destinationActivity);
-        childStartActivityIntent.putExtra(Intent.EXTRA_TEXT,weatherForDay);
-        startActivity(childStartActivityIntent);
-
-        //Explicit intent to start DetailsActivity
-
-    }
-
-    private class LocationQueryTask extends AsyncTask<String, Void, String[]> {
-
-        @Override
-        protected String[] doInBackground(String... parameters) {
-            //first we check wether parameter has any value
-            if (parameters.length == 0) {
-                //no data has been passed.
-                Log.d("Main - doInBackground", "PARAM LENGTH IS NULL");
-                return null;
-            }
-            /* If there's no zip code, there's nothing to look up. */
-            String location = parameters[0];
-            URL weatherRequestURL = NetworkUtils.buildURL(location);
-
-            try {
-                String weatherSearchResponse = NetworkUtils.getResponseHttpUrl(weatherRequestURL);
-                String[] simpleJsonWeatherData = OpenWeatherJsonUtils.getSimpleWeatherStringsfromJson(getApplicationContext(), weatherSearchResponse);
-                return simpleJsonWeatherData;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mProgressBar.setVisibility(View.VISIBLE);
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String[] weatherResponses) {
-            mProgressBar.setVisibility(View.INVISIBLE);
-            if (weatherResponses != null) {
-                showJsonDataView();
-                mForecastAdapter.setWeatherData(weatherResponses);
-            } else {
-                showErrorMessage();
-            }
-        }
-    }
-
 }
-
-//split the files after app is done??
-//basically whatever changes you want to do to ui, you have to do through adapter non other way
+//TODO fill out the overrides and create supporting functions.
 
