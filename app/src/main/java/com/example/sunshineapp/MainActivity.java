@@ -53,8 +53,24 @@ public class MainActivity extends AppCompatActivity{
                 String allPreviousLifeCycleCallbacks = savedInstanceState.getString(LIFECYCLE_CALLBACKS_TEXT_KEY);
                 mLifeCycleDisplay.setText(allPreviousLifeCycleCallbacks);
             }
+        }// TODOsdf (4) Iterate backwards through mLifecycleCallbacks, appending each String and a newline to mLifecycleDisplay
+        /*
+         * Since any updates to the UI we make after onSaveInstanceState (onStop, onDestroy, etc),
+         * we use an ArrayList to track if these lifecycle events had occurred. If any of them have
+         * occurred, we append their respective name to the TextView.
+         *
+         * The reason we iterate starting from the back of the ArrayList and ending in the front
+         * is that the most recent callbacks are inserted into the front of the ArrayList, so
+         * naturally the older callbacks are stored further back. We could have used a Queue to do
+         * this, but Java has strange API names for the Queue interface that we thought might be
+         * more confusing than this ArrayList solution.
+         */
+        for(int i= mLifeCycleCallbacks.size()-1;i>=0;i-=1){
+            mLifeCycleDisplay.append(mLifeCycleCallbacks.get(i)+"\n");
         }
-
+        mLifeCycleCallbacks.clear();
+        // TODOds (5) Clear mLifecycleCallbacks after iterating through it
+        //dont know how to do either so...s
         logAppend(ON_CREATE);
 
     }
@@ -88,6 +104,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onStop() {
         super.onStop();
+        mLifeCycleCallbacks.add(0,ON_STOP);
         logAppend(ON_STOP);
     }
 
@@ -100,6 +117,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mLifeCycleCallbacks.add(0,ON_DESTROY);
         logAppend(ON_DESTROY);
     }
 
