@@ -5,13 +5,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 //BEFORE PROCEEDING.
 
 public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final ArrayList<String> mLifeCycleCallbacks = new ArrayList<>();
+    private static final String LIFECYCLE_CALLBACKS_TEXT_KEY = "callbacks";
 
     /* Constant values for the names of each respective lifecycle callback */
     private static final String ON_CREATE = "onCreate";
@@ -37,7 +44,28 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mLifeCycleDisplay = (TextView) findViewById(R.id.tv_lifecycle_events_display);
+
+        //check the null , the key then. extract the string from previous state-- variable
+        //set this as text in tv
+        if (savedInstanceState!=null){
+            if(savedInstanceState.containsKey(LIFECYCLE_CALLBACKS_TEXT_KEY)){
+                String allPreviousLifeCycleCallbacks = savedInstanceState.getString(LIFECYCLE_CALLBACKS_TEXT_KEY);
+                mLifeCycleDisplay.setText(allPreviousLifeCycleCallbacks);
+            }
+        }
+
         logAppend(ON_CREATE);
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //extract from tv an put the data in outstate-- bundle of savedInstance.
+        logAppend(ON_SAVE_INSTANCE_STATE);
+        String lifeCycleDisplayTextViewContents = mLifeCycleDisplay.getText().toString();
+        outState.putString(LIFECYCLE_CALLBACKS_TEXT_KEY,lifeCycleDisplayTextViewContents);
     }
 
     @Override
@@ -54,22 +82,25 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onPause() {
         super.onPause();
-        logAppend(ON_);
+        logAppend(ON_PAUSE);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        logAppend(ON_STOP);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        logAppend(ON_RESTART);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        logAppend(ON_DESTROY);
     }
 
 
