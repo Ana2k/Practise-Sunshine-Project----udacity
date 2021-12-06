@@ -61,11 +61,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //if the savedInstance is not null, set the text of searcha nd textResult textView
         if(savedInstanceState!=null ){
             String queryUrl = savedInstanceState.getString(SEARCH_QUERY_URL_EXETRA);
-            String rawJsonUrl = savedInstanceState.getString(SEARCH_RESULTS_RAW_JSON);
+
             mUrlDisplayTextView.setText(queryUrl);
-            mSearchResultsTextView.setText(rawJsonUrl);
 
         }
+        getLoaderManager().initLoader(GITHUB_SEARCH_LOADER,null,this);
     }
 
     @Override
@@ -84,8 +84,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * that URL in a TextView, and finally fires off an AsyncTask to perform the GET request using
      *
      */
+    @SuppressLint("SetTextI18n")
     private void makeGithubSearchQuery(){
         String githubQuery = mSearchboxEditText.getText().toString();
+
+        /*
+         * If the user didn't enter anything, there's nothing to search for. In the case where no
+         * search text was entered but the search button was clicked, we will display a message
+         * stating that there is nothing to search for and we will not attempt to load anything.
+         *
+         * If there is text entered in the search box when the search button was clicked, we will
+         * create the URL that will return our Github search results, display that URL, and then
+         * pass that URL to the Loader. The reason we pass the URL as a String is simply a matter
+         * of convenience. There are other ways of achieving this same result, but we felt this
+         * was the simplest.
+         */
+        if (TextUtils.isEmpty(githubQuery)) {
+            mUrlDisplayTextView.setText(R.string.query_string_mainACtivity);
+            return;
+        }
         URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
         mUrlDisplayTextView.setText(githubSearchUrl.toString());
 
