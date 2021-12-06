@@ -110,14 +110,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
          * one doesn't exist, we tell the LoaderManager to create one. If one does exist, we tell
          * the LoaderManager to restart it.
          */
-        androidx.loader.app.LoaderManager loaderManager = getSupportLoaderManager();
-        androidx.loader.content.Loader<Object> githubSearchLoader = loaderManager.getLoader(GITHUB_SEARCH_LOADER);
+//        androidx.loader.app.LoaderManager loaderManager = getSupportLoaderManager();
+//        androidx.loader.content.Loader<Object> githubSearchLoader = loaderManager.getLoader(GITHUB_SEARCH_LOADER);
+//
+//        if(githubSearchLoader == null){
+//            loaderManager.initLoader(GITHUB_SEARCH_LOADER,queryBundle,this);
+//        }else{
+//            loaderManager.restartLoader(GITHUB_SEARCH_LOADER,queryBundle,this);
+//        }
 
-        if(githubSearchLoader == null){
-            loaderManager.initLoader(GITHUB_SEARCH_LOADER,queryBundle,this);
+        Loader<Object> githubSearchLoader = getLoaderManager().getLoader(GITHUB_SEARCH_LOADER);
+        if(githubSearchLoader==null){
+            getLoaderManager().initLoader(GITHUB_SEARCH_LOADER, queryBundle, this);
+        }else{
+            getLoaderManager().restartLoader(GITHUB_SEARCH_LOADER, queryBundle, this);
         }
-
-
 
     }
 
