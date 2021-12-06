@@ -1,5 +1,6 @@
 package com.example.sunshineapp;
 
+import android.annotation.SuppressLint;
 import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
 import android.content.Loader;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * This method retrieves the search text from the EditText, constructs the
      * URL (using {@link NetworkUtils}) for the github repository you'd like to find, displays
      * that URL in a TextView, and finally fires off an AsyncTask to perform the GET request using
-     * our {@link GithubQueryTask}
+     *
      */
     private void makeGithubSearchQuery(){
         String githubQuery = mSearchboxEditText.getText().toString();
@@ -95,11 +96,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Bundle queryBundle = new Bundle();
         queryBundle.putString(SEARCH_QUERY_URL_EXETRA,githubSearchUrl.toString());
 
+        /*
+         * Now that we've created our bundle that we will pass to our Loader, we need to decide
+         * if we should restart the loader (if the loader already existed) or if we need to
+         * initialize the loader (if the loader did NOT already exist).
+         *
+         * We do this by first store the support loader manager in the variable loaderManager.
+         * All things related to the Loader go through through the LoaderManager. Once we have a
+         * hold on the support loader manager, (loaderManager) we can attempt to access our
+         * githubSearchLoader. To do this, we use LoaderManager's method, "getLoader", and pass in
+         * the ID we assigned in its creation. You can think of this process similar to finding a
+         * View by ID. We give the LoaderManager an ID and it returns a loader (if one exists). If
+         * one doesn't exist, we tell the LoaderManager to create one. If one does exist, we tell
+         * the LoaderManager to restart it.
+         */
+        androidx.loader.app.LoaderManager loaderManager = getSupportLoaderManager();
+        androidx.loader.content.Loader<Object> githubSearchLoader = loaderManager.getLoader(GITHUB_SEARCH_LOADER);
+
+        if(githubSearchLoader == null){
+            loaderManager.initLoader(GITHUB_SEARCH_LOADER,queryBundle,this);
+        }
 
 
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public Loader<String> onCreateLoader(int id, final Bundle args) {
         return new AsyncTaskLoader<String>(this) {
@@ -121,8 +143,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 try{
                     URL githubUrl = new URL(searchQueryUrlString);
-                    String githubSearchResults = NetworkUtils.getResponseFromHttpUtl(githubUrl);
-                    return githubSearchResults;
+                    return NetworkUtils.getResponseFromHttpUtl(githubUrl);
                 } catch (Exception e) {
                     e.printStackTrace();
                     return null;
