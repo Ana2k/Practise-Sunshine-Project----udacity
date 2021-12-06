@@ -118,6 +118,9 @@
     <string name="map_location">Map Location</string>
     <string name="action_share">Share</string>
     <string name="search">Search</string>
+    <string name="make_a_search">Make a search!</string>
+    <string name="enter_a_query_then_click_search">Enter a query, then click Search</string>
+    <string name="click_url">Click search and your URL will show up here!</string>
 
 
     <!-- - - - - - - - - - - -->

@@ -15,9 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sunshineapp.utilities.NetworkUtils;
 
 import java.net.URL;
-
+//TODO
+//https://github.com/udacity/ud851-Exercises/blob/student/Lesson05b-Smarter-GitHub-Repo-Search/T05b.01-Exercise-SaveResults/app/src/main/java/com/example/android/asynctaskloader/MainActivity.java
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String SEARCH_QUERY_URL_EXETRA = "query";
+    private static final String SEARCH_RESULTS_RAW_JSON = "results";
+
+
     private TextView mSearchResultsTextView, mErrorMessageDisplay, mUrlDisplayTextView;
     private EditText mSearchboxEditText;
     private ProgressBar mLoadingIndicator;
@@ -45,6 +51,25 @@ public class MainActivity extends AppCompatActivity {
 
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
         mSearchboxEditText = (EditText) findViewById(R.id.et_search_box);
+
+        //if the savedInstance is not null, set the text of searcha nd textResult textView
+        if(savedInstanceState!=null ){
+            String queryUrl = savedInstanceState.getString(SEARCH_QUERY_URL_EXETRA);
+            String rawJsonUrl = savedInstanceState.getString(SEARCH_RESULTS_RAW_JSON);
+            mUrlDisplayTextView.setText(queryUrl);
+            mSearchResultsTextView.setText(rawJsonUrl);
+
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String queryUrl = mUrlDisplayTextView.getText().toString();
+        outState.putString(SEARCH_QUERY_URL_EXETRA,queryUrl);
+
+        String rawJsonUrl = mSearchResultsTextView.getText().toString();
+        outState.putString(SEARCH_RESULTS_RAW_JSON,rawJsonUrl);
     }
 
     /**
