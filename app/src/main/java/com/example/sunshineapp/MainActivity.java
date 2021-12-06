@@ -59,33 +59,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mSearchboxEditText = (EditText) findViewById(R.id.et_search_box);
 
         //if the savedInstance is not null, set the text of searcha nd textResult textView
-        if(savedInstanceState!=null ){
+        if (savedInstanceState != null) {
             String queryUrl = savedInstanceState.getString(SEARCH_QUERY_URL_EXETRA);
 
             mUrlDisplayTextView.setText(queryUrl);
 
         }
-        getLoaderManager().initLoader(GITHUB_SEARCH_LOADER,null,this);
+        getLoaderManager().initLoader(GITHUB_SEARCH_LOADER, null, this);
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         String queryUrl = mUrlDisplayTextView.getText().toString();
-        outState.putString(SEARCH_QUERY_URL_EXETRA,queryUrl);
+        outState.putString(SEARCH_QUERY_URL_EXETRA, queryUrl);
 
         String rawJsonUrl = mSearchResultsTextView.getText().toString();
-        outState.putString(SEARCH_RESULTS_RAW_JSON,rawJsonUrl);
+        outState.putString(SEARCH_RESULTS_RAW_JSON, rawJsonUrl);
     }
 
     /**
      * This method retrieves the search text from the EditText, constructs the
      * URL (using {@link NetworkUtils}) for the github repository you'd like to find, displays
      * that URL in a TextView, and finally fires off an AsyncTask to perform the GET request using
-     *
      */
     @SuppressLint("SetTextI18n")
-    private void makeGithubSearchQuery(){
+    private void makeGithubSearchQuery() {
         String githubQuery = mSearchboxEditText.getText().toString();
 
         /*
@@ -106,12 +105,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
         mUrlDisplayTextView.setText(githubSearchUrl.toString());
 
-        if(githubQuery.equals("") ||githubQuery==null || githubSearchUrl==null){
+        if (githubQuery.equals("") || githubQuery == null || githubSearchUrl == null) {
             return;
         }
 
         Bundle queryBundle = new Bundle();
-        queryBundle.putString(SEARCH_QUERY_URL_EXETRA,githubSearchUrl.toString());
+        queryBundle.putString(SEARCH_QUERY_URL_EXETRA, githubSearchUrl.toString());
 
         /*
          * Now that we've created our bundle that we will pass to our Loader, we need to decide
@@ -137,9 +136,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 //        }
 
         Loader<Object> githubSearchLoader = getLoaderManager().getLoader(GITHUB_SEARCH_LOADER);
-        if(githubSearchLoader==null){
+        if (githubSearchLoader == null) {
             getLoaderManager().initLoader(GITHUB_SEARCH_LOADER, queryBundle, this);
-        }else{
+        } else {
             getLoaderManager().restartLoader(GITHUB_SEARCH_LOADER, queryBundle, this);
         }
 
@@ -149,23 +148,41 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<String> onCreateLoader(int id, final Bundle args) {
         return new AsyncTaskLoader<String>(this) {
+
+            String mJsonResult;
+
             @Override
-            protected void onStartLoading(){
-                if(args==null){
+            protected void onStartLoading() {
+                if (args == null) {
                     return;
                 }
-                mLoadingIndicator.setVisibility(View.VISIBLE);
-                forceLoad();
+
+                if (mJsonResult != null) {
+                    deliverResult(mJsonResult);
+
+                } else {
+                    mLoadingIndicator.setVisibility(View.VISIBLE);
+                    forceLoad();
+                }
+                //modify this to store the cache result inn it.
+
             }
+
+            @Override
+            public void deliverResult(String githubJson) {
+                mJsonResult = githubJson;
+                super.deliverResult(githubJson);
+            }
+
             @Override
             public String loadInBackground() {
                 //takes out the data using NetworkUtils.getReponseFromHttpUrl
                 String searchQueryUrlString = args.getString(SEARCH_QUERY_URL_EXETRA);
-                if (TextUtils.isEmpty(searchQueryUrlString)){
+                if (TextUtils.isEmpty(searchQueryUrlString)) {
                     return null;
                 }
 
-                try{
+                try {
                     URL githubUrl = new URL(searchQueryUrlString);
                     return NetworkUtils.getResponseFromHttpUtl(githubUrl);
                 } catch (Exception e) {
@@ -182,10 +199,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //if data is not null show it by setting text
         // else showErrorMessage.
         mLoadingIndicator.setVisibility(View.INVISIBLE);
-        if(data == null){
+        if (data == null) {
             showErrorMessage();
-        }
-        else{
+        } else {
 
             showJsonDataView();
             mSearchResultsTextView.setText(data);
@@ -214,13 +230,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main,menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.action_search){
+        if (item.getItemId() == R.id.action_search) {
             makeGithubSearchQuery();
             return true;
         }
