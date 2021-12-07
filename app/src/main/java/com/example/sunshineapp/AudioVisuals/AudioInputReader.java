@@ -18,6 +18,7 @@ public class AudioInputReader {
     }
 
     private void initVisualiser() {
-
+        //Setup media Player
+        mPlayer = MediaPlayer.create(mContext, android.R.raw.)
     }
 }
