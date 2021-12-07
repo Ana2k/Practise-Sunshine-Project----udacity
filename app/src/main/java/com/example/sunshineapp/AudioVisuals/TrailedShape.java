@@ -8,6 +8,9 @@ import androidx.annotation.ColorInt;
 
 import java.util.LinkedList;
 
+/**
+ * Abstract class representing a shape and a trail for where it's been
+ */
 abstract class TrailedShape {
     // Static variables for the center of the parent view and the minimum size of all of the shapes
     private static float sViewCenterX, sViewCenterY;
@@ -46,7 +49,7 @@ abstract class TrailedShape {
     }
 
     //Static methods
-    static void setsMinSize(float minSize){
+    static void setMinSize(float minSize){
         TrailedShape.sMinSize = minSize;
 
     }
@@ -57,7 +60,7 @@ abstract class TrailedShape {
     }
 
     static void setViewCenterY(float viewCenterY){
-        TrailedShape.sViewCenterY = sViewCenterY;
+        TrailedShape.sViewCenterY = viewCenterY;
 
     }
 
