@@ -14,12 +14,16 @@ import androidx.core.app.ActivityCompat;
 import com.example.sunshineapp.AudioVisuals.AudioInputReader;
 import com.example.sunshineapp.AudioVisuals.VisualiserView;
 //BEFORE PROCEEDING.
-
+//https://classroom.udacity.com/courses/ud851/lessons/1392b674-18b6-4636-b36b-da7d37a319e3/concepts/eb405b65-4ad2-4672-845f-3fb7b64c9238
+//THE LINK TO DO
 //--||
 //--||
 //--||
 //-\__/
 //--\/
+//petitition to change this branch name to "TEMPLATE java mp3 player --visualiser"
+//--better pettion = make a seperate repo for only this thats private :)
+
 
 public class VisualiserActivity extends AppCompatActivity {
 
