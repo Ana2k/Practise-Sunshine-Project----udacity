@@ -27,12 +27,13 @@ import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
 //BEFORE PROCEEDING.
-//two words loadInBackground function
+
 //--||
 //--||
 //--||
 //-\__/
 //--\/
+
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String[]> {
 
 
@@ -122,14 +123,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
                         .getPreferredWeatherLocation(getBaseContext());
 
                 URL weatherRequestURL = NetworkUtils.buildURL(locationQuery);
-
-//                String parameters = args.getString()
-//                //first we check wether parameter has any value
-//                if (parameters.length == 0) {
-//                    //no data has been passed.
-//                    Log.d("Main - doInBackground", "PARAM LENGTH IS NULL");
-//                    return null;
-//                }
 
 
                 try {
