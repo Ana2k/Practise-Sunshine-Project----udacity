@@ -172,7 +172,7 @@ public class VisualiserView extends View {
      * Fourier transform bytes. The array is then taken, divided up into segments, and each segment
      * is averaged to determine how big of a visual spike to display.
      **/
-    private void updateFFT(byte[] bytes) {
+    public void updateFFT(byte[] bytes) {
 
         mBytes = bytes;
 
