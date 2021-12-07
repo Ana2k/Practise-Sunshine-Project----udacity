@@ -25,7 +25,7 @@ abstract class TrailedShape {
 
     // Paint for drawing
     private final Paint mPaint;
-    private Paint mTrailPaint;
+    private final Paint mTrailPaint;
 
     // Variable for determining position
     private float mShapeRadiusFromCenter;

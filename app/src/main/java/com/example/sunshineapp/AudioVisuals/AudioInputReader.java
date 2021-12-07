@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 
+import com.example.sunshineapp.R;
+
 public class AudioInputReader {
     private final VisualiserView mVisualiserView;
     private final Context mContext;
@@ -19,6 +21,8 @@ public class AudioInputReader {
 
     private void initVisualiser() {
         //Setup media Player
-        mPlayer = MediaPlayer.create(mContext, android.R.raw.)
+        mPlayer = MediaPlayer.create(this, android.R.raw.yogi);
+
+
     }
 }

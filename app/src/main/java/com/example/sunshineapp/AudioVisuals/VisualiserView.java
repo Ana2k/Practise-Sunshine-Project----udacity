@@ -41,9 +41,9 @@ public class VisualiserView extends View {
     private static final float RADIUS_TREBLE = 90 / 100.f;
 
     // The shapes
-    private TrailedShape mBassCircle;
-    private TrailedShape mMidSquare;
-    private TrailedShape mTrebleTriangle;
+    private final TrailedShape mBassCircle;
+    private final TrailedShape mMidSquare;
+    private final TrailedShape mTrebleTriangle;
 
     // The array which keeps the current fft bytes
     private byte[] mBytes;
