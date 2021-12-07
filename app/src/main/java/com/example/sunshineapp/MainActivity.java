@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
     private static int LOADER_ID = 3;
 
+    private String[] mWeatherData = null;//to be used by lambda of LoaderManager--LoaderCAllback
+
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
         return new AsyncTaskLoader<String[]>(this) {
 
-            String[] mWeatherData = null;
-            //Caching the data
 
             @Override
             protected void onStartLoading() {
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         };
 
     }//Dont know why but was not picking up mWeatherData bcs we had kept it outside of
-    //the lambda function. :/??? what was that about?
+    //the lambda function. :/??? what was that about?--> has constraints that it cant access certain classes and scopes.
 
     @Override
     public void onLoadFinished(Loader<String[]> loader, String[] data) {
