@@ -173,6 +173,7 @@ public class VisualiserView extends View {
      * is averaged to determine how big of a visual spike to display.
      **/
     private void updateFFT(byte[] bytes) {
+
         mBytes = bytes;
 
         // Calculate average for bass segment

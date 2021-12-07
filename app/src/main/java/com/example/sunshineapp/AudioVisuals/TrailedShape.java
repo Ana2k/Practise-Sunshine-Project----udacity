@@ -30,7 +30,7 @@ abstract class TrailedShape {
     // Variable for determining position
     private float mShapeRadiusFromCenter;
 
-    TrailedShape(float multiplier){
+    TrailedShape(float multiplier) {
         this.mMultiplier = multiplier;
 
         ///Setup Trail Variables
@@ -49,31 +49,32 @@ abstract class TrailedShape {
     }
 
     //Static methods
-    static void setMinSize(float minSize){
+    static void setMinSize(float minSize) {
         TrailedShape.sMinSize = minSize;
 
     }
 
-    static void setViewCenterX(float viewCenterX){
+    static void setViewCenterX(float viewCenterX) {
         TrailedShape.sViewCenterX = viewCenterX;
 
     }
 
-    static void setViewCenterY(float viewCenterY){
+    static void setViewCenterY(float viewCenterY) {
         TrailedShape.sViewCenterY = viewCenterY;
 
     }
 
-    /**This draw method abstracts out what is common between drawing all shapes
+    /**
+     * This draw method abstracts out what is common between drawing all shapes
      *
      * @param canvas         The canvas to draw on
      * @param currentFreqAve The average frequency for the same, which determines the boost in size
      * @param currentAngle   The current angle around the center to draw the shape
      */
-    void draw(Canvas canvas, float currentFreqAve, double currentAngle){
+    void draw(Canvas canvas, float currentFreqAve, double currentAngle) {
         //ALL THE MATHS TO DRAW THE SHAPES :heart:
 
-        float currentSize = sMinSize+mMultiplier*currentFreqAve;
+        float currentSize = sMinSize + mMultiplier * currentFreqAve;
 
         // Calculate where the shape is
         float shapeCenterX = calcLocationInAnimationX(mShapeRadiusFromCenter, currentAngle);
@@ -87,21 +88,21 @@ abstract class TrailedShape {
         mTrailList.add(new TrailPoint(trailX, trailY, currentAngle)); // add the new line segment
 
         // Keep the trail size correct
-        while(currentAngle - mTrailList.peekFirst().theta>2* Math.PI){
+        while (currentAngle - mTrailList.peekFirst().theta > 2 * Math.PI) {
             mTrailList.poll();
         }
 
 
         // Draw the trail
-        mTrailPath.moveTo(mTrailList.peekFirst().x,mTrailList.peekFirst().y);
-        for(TrailPoint trailPoint :mTrailList){
-            mTrailPath.lineTo(trailPoint.x,trailPoint.y);
+        mTrailPath.moveTo(mTrailList.peekFirst().x, mTrailList.peekFirst().y);
+        for (TrailPoint trailPoint : mTrailList) {
+            mTrailPath.lineTo(trailPoint.x, trailPoint.y);
         }
 
-        canvas.drawPath(mTrailPath,mTrailPaint);
+        canvas.drawPath(mTrailPath, mTrailPaint);
 
         // Call the abstract drawThisShape method, this must be defined for each shape.
-        drawThisShape(shapeCenterX,shapeCenterY,currentSize,canvas,mPaint);
+        drawThisShape(shapeCenterX, shapeCenterY, currentSize, canvas, mPaint);
 
     }
 
@@ -115,6 +116,7 @@ abstract class TrailedShape {
      * @param paint        The paint to draw with
      */
     protected abstract void drawThisShape(float shapeCenterX, float shapeCenterY, float currentSize, Canvas canvas, Paint paint);
+
     /**
      * Clears the trail
      */
@@ -125,34 +127,35 @@ abstract class TrailedShape {
     /**
      * Calculates the center x location
      *
-     * @param radiusFromCenter    The distance from the center of this shape
-     * @param currentAngle The current angle of the shape
+     * @param radiusFromCenter The distance from the center of this shape
+     * @param currentAngle     The current angle of the shape
      * @return
      */
     private float calcLocationInAnimationX(float radiusFromCenter, double currentAngle) {
-        return (float) (sViewCenterX+Math.cos(currentAngle)*radiusFromCenter);
+        return (float) (sViewCenterX + Math.cos(currentAngle) * radiusFromCenter);
     }
 
     /**
      * Calculates the center y location
      *
-     * @param radiusFromCenter    The distance from the center of this shape
-     * @param currentAngle The current angle of the shape
+     * @param radiusFromCenter The distance from the center of this shape
+     * @param currentAngle     The current angle of the shape
      * @return
      */
     private float calcLocationInAnimationY(float radiusFromCenter, double currentAngle) {
-        return (float) (sViewCenterY+Math.sin(currentAngle)*radiusFromCenter);
+        return (float) (sViewCenterY + Math.sin(currentAngle) * radiusFromCenter);
     }
 
     /**
      * Sets shape--trail color
+     *
      * @param color Colour to set this shape to
      */
-    void setShapeColor(@ColorInt int color){
+    void setShapeColor(@ColorInt int color) {
         mPaint.setColor(color);
     }
 
-    void setTrailColor(@ColorInt int color){
+    void setTrailColor(@ColorInt int color) {
         mTrailPaint.setColor(color);
     }
 
