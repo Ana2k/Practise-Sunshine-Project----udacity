@@ -12,13 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SunshineApp">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetailActivity"
-            android:parentActivityName=".VisualiserActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".VisualiserActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".VisualiserActivity"
-                />
+                android:value=".VisualiserActivity" />
         </activity>
         <activity
             android:name=".VisualiserActivity"
