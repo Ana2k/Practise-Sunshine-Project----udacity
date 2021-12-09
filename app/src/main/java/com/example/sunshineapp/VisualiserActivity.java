@@ -53,7 +53,6 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
         mVisualiserView.setShowMid(sharedPreferences.getBoolean(getString(R.string.pref_show_mid_range),true));
         mVisualiserView.setShowTreble(sharedPreferences.getBoolean(getString(R.string.pref_show_treble),true));
 
-        mVisualiserView.setShowTreble(true);
         mVisualiserView.setMinSizeScale(1);
         mVisualiserView.setColor(getString(R.string.pref_color_red_value));
 

@@ -19,5 +19,14 @@
         android:summaryOff="@string/Hidden"
         android:summaryOn="@string/shown"
         android:title="@string/Show_Treble" />
+    <ListPreference
+        android:entries=""
+        android:key=""
+        android:defaultValue=""
+        android:entryValues=""
+
+
+
+        />
 
 </PreferenceScreen>
