@@ -17,8 +17,7 @@ import com.example.sunshineapp.AudioVisuals.AudioInputReader;
 import com.example.sunshineapp.AudioVisuals.VisualiserView;
 //BEFORE PROCEEDING.
 //TOdo --
-//--do the same with other two checkboxes that which you have done with bass
-//
+//---crazy amount of code wrt shared preferences in the settingsActivity?
 //--||
 //--||
 //--||
