@@ -5,6 +5,8 @@ import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.os.Build;
 
+import com.example.sunshineapp.R;
+
 public class AudioInputReader {
     private final VisualiserView mVisualiserView;
     private final Context mContext;
@@ -20,7 +22,7 @@ public class AudioInputReader {
 
     private void initVisualiser() {
         //Setup media Player
-        mPlayer = MediaPlayer.create(this, android.R.raw.yogi);
+        mPlayer = MediaPlayer.create(mVisualiserView.getContext(), R.raw.htmlthesong);
         mPlayer.setLooping(true);
 
         //setup visualiser
