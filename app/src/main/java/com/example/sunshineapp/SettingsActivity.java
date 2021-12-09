@@ -21,6 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+    //oncreate optionsMenu?? -- not needed but why?
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
