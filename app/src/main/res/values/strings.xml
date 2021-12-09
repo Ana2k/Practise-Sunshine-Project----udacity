@@ -18,10 +18,14 @@
     <string name="setting">Setting</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="show_bass">show_bass</string>
+    <string name="pref_show_bass_key">show_bass</string>
     <string name="permission">Permission for audio not granted. Visualizer can\'t run.</string>
     <string name="Hidden">Hidden</string>
     <string name="Show_Bass">Show Bass</string>
     <string name="boolean_true">true</string>
     <string name="shown">Shown</string>
+    <string name="show_mid_range">show_mid_range</string>
+    <string name="show_treble">show_treble</string>
+    <string name="Show_Mid_Range">Show Mid Range</string>
+    <string name="Show_Treble">Show Treble</string>
 </resources>

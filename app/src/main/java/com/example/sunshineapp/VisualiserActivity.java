@@ -16,8 +16,8 @@ import androidx.preference.PreferenceManager;
 import com.example.sunshineapp.AudioVisuals.AudioInputReader;
 import com.example.sunshineapp.AudioVisuals.VisualiserView;
 //BEFORE PROCEEDING.
-//SharedPreference --- does not save by itself on rotating so the lifecycle states need to be managed
-//appropriately.
+//TOdo --
+//-- override the onDestroy and unregister the listener
 //--||
 //--||
 //--||
@@ -28,7 +28,8 @@ import com.example.sunshineapp.AudioVisuals.VisualiserView;
 //--better pettion = make a seperate repo for only this thats private :)
 
 
-public class VisualiserActivity extends AppCompatActivity {
+public class VisualiserActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+
 
     private static final int MY_PERMISSION_RECORD_AUDIO_REQUEST_CODE = 888;
     private VisualiserView mVisualiserView;
@@ -45,15 +46,14 @@ public class VisualiserActivity extends AppCompatActivity {
 
 
     private void setupSharedPreference() {
-//        Get a reference to the default shared preferences from the PreferenceManager class
-//        Get the value of the show_bass checkbox preference and use it to call setShowBass
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        mVisualiserView.setShowBass(sharedPreferences.getBoolean(getString(R.string.show_bass),true));
+        mVisualiserView.setShowBass(sharedPreferences.getBoolean(getString(R.string.pref_show_bass_key),true));
 
         mVisualiserView.setShowMid(true);
         mVisualiserView.setShowTreble(true);
         mVisualiserView.setMinSizeScale(1);
         mVisualiserView.setColor(getString(R.string.pref_color_red_value));
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
 
@@ -79,6 +79,12 @@ public class VisualiserActivity extends AppCompatActivity {
         if (mAudioInputReader != null) {
             mAudioInputReader.restart();
         }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
 
@@ -116,6 +122,14 @@ public class VisualiserActivity extends AppCompatActivity {
                 }
             }
             // Other permissions could go down here
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(getString(R.string.pref_show_bass_key))){
+            mVisualiserView.setShowBass(sharedPreferences.getBoolean(key,getResources().getBoolean(R.bool.pref_show_bass_default)));
+            //mVisualiserView.setShowBass(sharedPreferences.getBoolean(key,getResources().getBoolean(R.bool.pref_show_bass_default)));
         }
     }
 }
