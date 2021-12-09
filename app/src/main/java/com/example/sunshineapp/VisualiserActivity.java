@@ -47,7 +47,7 @@ public class VisualiserActivity extends AppCompatActivity {
 //        Get a reference to the default shared preferences from the PreferenceManager class
 //        Get the value of the show_bass checkbox preference and use it to call setShowBass
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        mVisualiserView.setShowBass(sharedPreferences.getBoolean("show_bass",true));
+        mVisualiserView.setShowBass(sharedPreferences.getBoolean(getString(R.string.show_bass),true));
 
         mVisualiserView.setShowMid(true);
         mVisualiserView.setShowTreble(true);
@@ -108,7 +108,7 @@ public class VisualiserActivity extends AppCompatActivity {
                     mAudioInputReader = new AudioInputReader(mVisualiserView, this);
 
                 } else {
-                    Toast.makeText(this, "Permission for audio not granted. Visualizer can't run.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.permission, Toast.LENGTH_LONG).show();
                     finish();
                     // The permission was denied, so we can show a message why we can't run the app
                     // and then close the app.
