@@ -1,6 +1,7 @@
 package com.example.sunshineapp;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import com.example.sunshineapp.AudioVisuals.AudioInputReader;
 import com.example.sunshineapp.AudioVisuals.VisualiserView;
@@ -36,13 +38,17 @@ public class VisualiserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualiser);
         mVisualiserView = (VisualiserView) findViewById(R.id.activity_visualizer);
-        defaultSetup();
+        setupSharedPreference();
         setupPermissions();
     }
 
 
-    private void defaultSetup() {
-        mVisualiserView.setShowBass(true);
+    private void setupSharedPreference() {
+//        Get a reference to the default shared preferences from the PreferenceManager class
+//        Get the value of the show_bass checkbox preference and use it to call setShowBass
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mVisualiserView.setShowBass(sharedPreferences.getBoolean("show_bass",true));
+
         mVisualiserView.setShowMid(true);
         mVisualiserView.setShowTreble(true);
         mVisualiserView.setMinSizeScale(1);
