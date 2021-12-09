@@ -29,7 +29,7 @@ import com.example.sunshineapp.AudioVisuals.VisualiserView;
 //--better pettion = make a seperate repo for only this thats private :)
 
 
-public class VisualiserActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class VisualiserActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     private static final int MY_PERMISSION_RECORD_AUDIO_REQUEST_CODE = 888;
@@ -49,14 +49,23 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
     private void setupSharedPreference() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        mVisualiserView.setShowBass(sharedPreferences.getBoolean(getString(R.string.pref_show_bass_key),true));
-        mVisualiserView.setShowMid(sharedPreferences.getBoolean(getString(R.string.pref_show_mid_range),true));
-        mVisualiserView.setShowTreble(sharedPreferences.getBoolean(getString(R.string.pref_show_treble),true));
+        mVisualiserView.setShowBass(sharedPreferences.getBoolean(getString(R.string.pref_show_bass_key), true));
+        mVisualiserView.setShowMid(sharedPreferences.getBoolean(getString(R.string.pref_show_mid_range_key), true));
+        mVisualiserView.setShowTreble(sharedPreferences.getBoolean(getString(R.string.pref_show_treble_key), true));
 
         mVisualiserView.setMinSizeScale(1);
-        mVisualiserView.setColor(getString(R.string.pref_color_red_value));
+        //
+
+        loadColourFromPreferences(sharedPreferences);
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    private void loadColourFromPreferences(SharedPreferences sharedPreferences) {
+        mVisualiserView
+                .setColor(sharedPreferences
+                        .getString(getString(R.string.pref_color_key)
+                                , getString(R.string.pref_color_red_value)));
     }
 
 
@@ -83,6 +92,7 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
             mAudioInputReader.restart();
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -118,7 +128,7 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
                     mAudioInputReader = new AudioInputReader(mVisualiserView, this);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.permission, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.permission_not_granted, Toast.LENGTH_LONG).show();
                     finish();
                     // The permission was denied, so we can show a message why we can't run the app
                     // and then close the app.
@@ -130,14 +140,12 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals(getString(R.string.pref_show_bass_key))){
-            mVisualiserView.setShowBass(sharedPreferences.getBoolean(key,getResources().getBoolean(R.bool.pref_show_bass_default)));
-        }
-        else if(key.equals(getString(R.string.pref_show_mid_range))){
-            mVisualiserView.setShowMid(sharedPreferences.getBoolean(key,getResources().getBoolean(R.bool.pref_show_mid_range_default)));
-        }
-        else if(key.equals(getString(R.string.pref_show_treble))){
-            mVisualiserView.setShowTreble(sharedPreferences.getBoolean(key,getResources().getBoolean(R.bool.pref_show_treble_default)));
+        if (key.equals(getString(R.string.pref_show_bass_key))) {
+            mVisualiserView.setShowBass(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_show_bass_default)));
+        } else if (key.equals(getString(R.string.pref_show_mid_range_key))) {
+            mVisualiserView.setShowMid(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_show_mid_range_default)));
+        } else if (key.equals(getString(R.string.pref_show_treble_key))) {
+            mVisualiserView.setShowTreble(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_show_treble_default)));
         }
 
     }
