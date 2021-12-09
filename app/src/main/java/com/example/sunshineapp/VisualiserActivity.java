@@ -16,8 +16,9 @@ import androidx.preference.PreferenceManager;
 import com.example.sunshineapp.AudioVisuals.AudioInputReader;
 import com.example.sunshineapp.AudioVisuals.VisualiserView;
 //BEFORE PROCEEDING.
-//https://classroom.udacity.com/courses/ud851/lessons/1392b674-18b6-4636-b36b-da7d37a319e3/concepts/eb405b65-4ad2-4672-845f-3fb7b64c9238
-//THE LINK TO DO
+//SharedPreference --- does not save by itself on rotating so the lifecycle states need to be managed
+//appropriately.
+//--||
 //--||
 //--||
 //--||
