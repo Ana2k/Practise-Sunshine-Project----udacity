@@ -1,8 +1,32 @@
 package com.example.sunshineapp.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+
+import androidx.preference.PreferenceManager;
+
+import com.example.sunshineapp.R;
+//TODOs
+//--
+//Return the user's preferred location--1---saw the solution to this.
+
+//Return true if the user's preference for units is metric, false otherwise--2 -- ditto for this
+
+//Implement OnSharedPreferenceChangeListener on MainActivity--3
+//i think mostly all the folowing ones are in mainactivity only
+//Add a private static boolean flag for preference updates and initialize it to false--4
+//COMPLETED (5) Override onSharedPreferenceChanged to set the preferences flag to true--5
+//Register MainActivity as a OnSharedPreferenceChangedListener in onCreate
+//        /*
+//         * Register MainActivity as an OnPreferenceChangedListener to receive a callback when a
+//         * SharedPreference has changed. Please note that we must unregister MainActivity as an
+//         * OnSharedPreferenceChanged listener in onDestroy to avoid any memory leaks.--6
+//In onStart, if preferences have been changed, refresh the data and set the flag to false ---7
+//Override onDestroy and unregister MainActivity as a SharedPreferenceChangedListener -- 8
+//Use preferred location rather than a default location to display in the map --- 9
 
 public class SunshinePreferences {
+
     /*
      * Human readable location string, provided by the API.  Because for styling,
      * "Mountain View" is more recognizable than 94043.
@@ -68,8 +92,10 @@ public class SunshinePreferences {
      *  "94043,USA" if SharedPreferences have not been implemented yet.
      */
     public static String getPreferredWeatherLocation(Context context) {
-
-        return getDefaultWeatherLocation();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String keyForLocation = context.getString(R.string.pref_location_key);
+        String defaultLocation = context.getString(R.string.pref_location_default);
+        return preferences.getString(keyForLocation,defaultLocation);
     }
 
     /**
@@ -79,8 +105,19 @@ public class SunshinePreferences {
      * @return true If metric display should be used
      */
     public static boolean isMetric(Context context) {
-        /** This will be implemented in a future lesson **/
-        return true;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String keyForUnits = context.getString(R.string.pref_units_key);
+        String defaultUnits = context.getString(R.string.pref_units_label);
+
+        String preferredUnits = preferences.getString(keyForUnits,defaultUnits);
+        String metric = context.getString(R.string.pref_units_metric);
+        boolean userPrefersMetric;
+        if(metric.equals(preferredUnits)){
+            userPrefersMetric = true;
+        }else {
+            userPrefersMetric = false;
+        }
+        return userPrefersMetric;
     }
 
     public static double[] getLocationinCoordinates(Context context){
