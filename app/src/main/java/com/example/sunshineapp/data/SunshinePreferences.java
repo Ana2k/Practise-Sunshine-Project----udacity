@@ -7,23 +7,6 @@ import androidx.preference.PreferenceManager;
 
 import com.example.sunshineapp.R;
 //TODOs
-//--
-//Return the user's preferred location--1---saw the solution to this.
-
-//Return true if the user's preference for units is metric, false otherwise--2 -- ditto for this
-
-//Implement OnSharedPreferenceChangeListener on MainActivity--3
-//i think mostly all the folowing ones are in mainactivity only
-//Add a private static boolean flag for preference updates and initialize it to false--4
-//COMPLETED (5) Override onSharedPreferenceChanged to set the preferences flag to true--5
-//Register MainActivity as a OnSharedPreferenceChangedListener in onCreate
-//        /*
-//         * Register MainActivity as an OnPreferenceChangedListener to receive a callback when a
-//         * SharedPreference has changed. Please note that we must unregister MainActivity as an
-//         * OnSharedPreferenceChanged listener in onDestroy to avoid any memory leaks.--6
-//In onStart, if preferences have been changed, refresh the data and set the flag to false ---7
-//Override onDestroy and unregister MainActivity as a SharedPreferenceChangedListener -- 8
-//Use preferred location rather than a default location to display in the map --- 9
 
 public class SunshinePreferences {
 

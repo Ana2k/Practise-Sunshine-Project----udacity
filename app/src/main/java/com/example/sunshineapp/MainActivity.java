@@ -6,6 +6,7 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,7 +37,7 @@ import java.net.URL;
 //-\__/
 //--\/
 
-public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String[]> {
+public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String[]>, SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     /**
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     private RecyclerView mRecycleView;
 
     private static int LOADER_ID = 3;
+    private static boolean PREFERENCE_HAVE_BEEN_UPDATED = false;
 
     private String[] mWeatherData = null;//to be used by lambda of LoaderManager--LoaderCAllback
 
@@ -220,6 +222,20 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        /*
+         * Set this flag to true so that when control returns to MainActivity, it can refresh the
+         * data.
+         *
+         * This isn't the ideal solution because there really isn't a need to perform another
+         * GET request just to change the units, but this is the simplest solution that gets the
+         * job done for now. Later in this course, we are going to show you more elegant ways to
+         * handle converting the units from celsius to fahrenheit and back without hitting the
+         * network again by keeping a copy of the data in a manageable format.
+         */
+        PREFERENCE_HAVE_BEEN_UPDATED = true;
+    }
 }
 
 //split the files after app is done??
