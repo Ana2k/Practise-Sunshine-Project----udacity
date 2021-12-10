@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.preference.CheckBoxPreference;
+import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -13,6 +14,8 @@ import androidx.preference.PreferenceScreen;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -58,7 +61,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
     public void setPreferenceSummary(Preference preference, String value){
-
+        ListPreference listPreference = (ListPreference) preference;
+        int prefIndex = listPreference.findIndexOfValue(value);
+        if(prefIndex>=0){
+            listPreference.setSummary(listPreference.getEntries()[prefIndex]);
+        }else if(preference instanceof EditTextPreference){
+            preference.setSummary(value);
+        }
     }
 }
 
