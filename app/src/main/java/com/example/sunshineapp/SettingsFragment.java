@@ -43,6 +43,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         super.onCreate(savedInstanceState);
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
+        //inherits the pref_visualiser
     }
 
     @Override
@@ -61,6 +62,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         // passing in a preference and the value of the preference
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
+        //Cookies in browser = SharedPreferences....(O_O)
 
         int count = preferenceScreen.getPreferenceCount();
 
@@ -83,6 +85,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     // call setPreferenceSummary on the changed preference
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        //this works like notifydatasetChanged()??
+
         // Figure out which preference was changed
         Preference preference = findPreference(key);
         if (null != preference) {
@@ -94,6 +98,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
         //we attatch that value to correct preferences
     }
+    //we did not include the checkbox because, we have already setits summary in the pref_visualiser.xml file.
 
     // This method should check if the preference is a ListPreference and, if so, find the label
     // associated with the value. You can do this by using the findIndexOfValue and getEntries methods

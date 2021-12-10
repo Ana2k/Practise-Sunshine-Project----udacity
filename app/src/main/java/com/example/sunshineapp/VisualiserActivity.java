@@ -42,6 +42,12 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
         setupSharedPreference();
         setupPermissions();
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
 
 
     private void setupSharedPreference() {
@@ -71,13 +77,6 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
                 .setColor(sharedPreferences
                         .getString(getString(R.string.pref_color_key)
                                 , getString(R.string.pref_color_red_value)));
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
