@@ -68,7 +68,7 @@ public class SunshinePreferences {
      *  "94043,USA" if SharedPreferences have not been implemented yet.
      */
     public static String getPreferredWeatherLocation(Context context) {
-        /** This will be implemented in a future lesson **/
+
         return getDefaultWeatherLocation();
     }
 

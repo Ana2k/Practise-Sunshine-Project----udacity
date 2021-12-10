@@ -30,7 +30,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.pref_visualiser);
+        addPreferencesFromResource(R.xml.pref_general);
         //        Set the preference summary on each preference that isn't a CheckBoxPreference
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
