@@ -4,7 +4,4 @@ EACH "non-toy-app" Branch has the specific smaller task implemented through in t
 EACH toy-app branch has only that task implemented.
 Check diffs for more specs.
 
-PVT COMMENT:
-Re-do the course on a revision repo if you have forgotten everythinng,Ana.
-
-PS.UPDATE THIS AT THE END
+PS.UPDATE THIS README.md AT THE END and make seperate private repos for useful toy_apps , to use as reference.
