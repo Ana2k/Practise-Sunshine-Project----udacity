@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             openLocationMap();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

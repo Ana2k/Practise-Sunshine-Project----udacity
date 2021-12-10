@@ -48,6 +48,7 @@ public class DetailActivity extends AppCompatActivity {
                 .createChooserIntent();
         return shareIntent;
     }
+    //idk what but sth to do here.
 
 }
 
