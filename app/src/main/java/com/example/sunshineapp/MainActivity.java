@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -85,6 +86,35 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         LoaderManager loadManager = getLoaderManager();
 //        Loader<Object> searchLoader = loadManager.getLoader(LOADER_ID);
         loadManager.initLoader(LOADER_ID,queryBundle,this);
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    //In onStart, if preferences have been changed, refresh the data and set the flag to false
+    /**
+     * OnStart is called when the Activity is coming into view. This happens when the Activity is
+     * first created, but also happens when the Activity is returned to from another Activity. We
+     * are going to use the fact that onStart is called when the user returns to this Activity to
+     * check if the location setting or the preferred units setting has changed. If it has changed,
+     * we are going to perform a new query.
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(PREFERENCE_HAVE_BEEN_UPDATED){
+            Log.d(TAG,"onStart: preferences were updated");
+            getLoaderManager().restartLoader(LOADER_ID,null,this);
+            PREFERENCE_HAVE_BEEN_UPDATED = false;
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -95,6 +125,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         childStartActivityIntent.putExtra(Intent.EXTRA_TEXT, weatherForDay);
         startActivity(childStartActivityIntent);
     }
+
+
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -183,7 +215,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     }
 
     private void openLocationMap() {
-        String addressString = "1600 Ampitheatre Parkway, CA";
+        String addressString = SunshinePreferences
+                .getPreferredWeatherLocation(this);
         Uri geolocation = Uri.parse("geo:0,0?q=" + addressString);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(geolocation);
