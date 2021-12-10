@@ -17,7 +17,7 @@ import com.example.sunshineapp.AudioVisuals.AudioInputReader;
 import com.example.sunshineapp.AudioVisuals.VisualiserView;
 //BEFORE PROCEEDING.
 //TOdo --
-//---crazy amount of code wrt shared preferences in the settingsActivity?
+
 //--||
 //--||
 //--||
@@ -26,10 +26,6 @@ import com.example.sunshineapp.AudioVisuals.VisualiserView;
 //--\/
 //petitition to change this branch name to "TEMPLATE java mp3 player --visualiser"
 //--better pettion = make a seperate repo for only this thats private :)
-
-//udacity part --> https://classroom.udacity.com/courses/ud851/lessons/1392b674-18b6-4636-b36b-da7d37a319e3/concepts/7156d056-641e-491c-9b86-49f5310de0b0
-////T0D0 -->https://github.com/udacity/ud851-Exercises/tree/student/Lesson06-Visualizer-Preferences/T06.10-Solution-EditTextPreferenceConstraints/app/src/main/res
-//https://github.com/udacity/ud851-Exercises/tree/student/Lesson06-Visualizer-Preferences/T06.10-Solution-EditTextPreferenceConstraints/app/src/main/java/android/example/com/visualizerpreferences
 
 public class VisualiserActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -62,7 +58,11 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
     }
 
     private void loadSizeFromSharedPreference(SharedPreferences sharedPreferences) {
-        Float minSize = Float.parseFloat(sharedPreferences.getString(getString(R.string.pref_size_key), getString(R.string.pref_size_default)));
+        Float minSize = Float
+                .parseFloat(sharedPreferences
+                        .getString(getString(R.string.pref_size_key)
+                                , getString(R.string.pref_size_default)));
+
         mVisualiserView.setMinSizeScale(minSize);
     }
 
@@ -83,11 +83,23 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.pref_show_bass_key))) {
-            mVisualiserView.setShowBass(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_show_bass_default)));
+            mVisualiserView.
+                    setShowBass(sharedPreferences
+                            .getBoolean(key
+                                    , getResources()
+                                            .getBoolean(R.bool.pref_show_bass_default)));
         } else if (key.equals(getString(R.string.pref_show_mid_range_key))) {
-            mVisualiserView.setShowMid(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_show_mid_range_default)));
+            mVisualiserView
+                    .setShowMid(sharedPreferences
+                            .getBoolean(key
+                                    , getResources()
+                                            .getBoolean(R.bool.pref_show_mid_range_default)));
         } else if (key.equals(getString(R.string.pref_show_treble_key))) {
-            mVisualiserView.setShowTreble(sharedPreferences.getBoolean(key, getResources().getBoolean(R.bool.pref_show_treble_default)));
+            mVisualiserView
+                    .setShowTreble(sharedPreferences
+                            .getBoolean(key
+                                    , getResources()
+                                            .getBoolean(R.bool.pref_show_treble_default)));
         } else if (key.equals(getString(R.string.pref_color_key))) {
             loadColourFromPreferences(sharedPreferences);
         } else if (key.equals(getString(R.string.pref_size_key))) {
