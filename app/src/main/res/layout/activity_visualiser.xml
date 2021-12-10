@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.sunshineapp.AudioVisuals.VisualiserView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.sunshineapp.AudioVisuals.VisualiserView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_visualizer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sunshineapp.AudioVisuals.VisualiserView" />
-<!--inherits from custom view created-->
+    tools:context="com.example.sunshineapp.AudioVisuals.VisualiserView" /><!--inherits from custom view created-->
