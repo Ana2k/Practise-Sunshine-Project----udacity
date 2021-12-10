@@ -1,12 +1,12 @@
 package com.example.sunshineapp;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
-
-import android.os.Bundle;
-import android.view.MenuItem;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class SettingsActivity extends AppCompatActivity {
         ActionBar actionBar = this.getSupportActionBar();
 
         //Set the action bar back button to look like an up button
-        if(actionBar!=null){
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -26,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.action_settings){
+        if (id == R.id.action_settings) {
             NavUtils.navigateUpFromSameTask(this);
         }
         return super.onOptionsItemSelected(item);

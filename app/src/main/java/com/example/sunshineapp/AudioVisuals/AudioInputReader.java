@@ -59,24 +59,24 @@ public class AudioInputReader {
 
     }
 
-    public void shutdown(boolean isFinishing){
-        if(mPlayer!=null){
+    public void shutdown(boolean isFinishing) {
+        if (mPlayer != null) {
             mPlayer.pause();
-            if(isFinishing){
+            if (isFinishing) {
                 mVisualiser.release();
                 mPlayer.release();
                 mPlayer = null;
                 mVisualiser = null;
             }
         }
-        if(mVisualiser!=null){
+        if (mVisualiser != null) {
             mVisualiser.setEnabled(false);
         }
 
     }
 
-    public void restart(){
-        if(mPlayer!=null){
+    public void restart() {
+        if (mPlayer != null) {
             mPlayer.start();
         }
         mVisualiser.setEnabled(true);

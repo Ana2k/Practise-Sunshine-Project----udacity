@@ -2,6 +2,7 @@ package com.example.sunshineapp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.EditTextPreference;
@@ -29,8 +30,7 @@ import androidx.preference.PreferenceScreen;
 //#what was this crazy witchcraft code (T_T) ??
 
 
-
-public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceChangeListener {
 
 
     public SettingsFragment() {
@@ -57,9 +57,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.pref_visualiser);
 
-        // Get the preference screen, get the number of preferences and iterate through
-        // all of the preferences if it is not a checkbox preference, call the setSummary method
-        // passing in a preference and the value of the preference
         PreferenceScreen preferenceScreen = getPreferenceScreen();
         SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
         //Cookies in browser = SharedPreferences....(O_O)
@@ -76,17 +73,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 setPreferenceSummary(currentPreference, value);
             }
         }
+        // COMPLETED (3) Add the OnPreferenceChangeListener specifically to the EditTextPreference
+        // Add the preference listener which checks that the size is correct to the size preference
+        Preference preference = findPreference(getString(R.string.pref_size_key));
+        preference.setOnPreferenceChangeListener(this);
+
         //we create an empty preference summary just for
         //the listPreference
     }
 
-
-    // Override onSharedPreferenceChanged and, if it is not a checkbox preference,
-    // call setPreferenceSummary on the changed preference
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //this works like notifydatasetChanged()??
-
         // Figure out which preference was changed
         Preference preference = findPreference(key);
         if (null != preference) {
@@ -96,13 +93,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 setPreferenceSummary(preference, value);
             }
         }
-        //we attatch that value to correct preferences
     }
-    //we did not include the checkbox because, we have already setits summary in the pref_visualiser.xml file.
 
-    // This method should check if the preference is a ListPreference and, if so, find the label
-    // associated with the value. You can do this by using the findIndexOfValue and getEntries methods
-    // of Preference.
 
     /**
      * Updates the summary for the preference
@@ -118,12 +110,34 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             if (prefIndex >= 0) {
                 listPreference.setSummary(listPreference.getEntries()[prefIndex]);
             }
-        }
-
-        else if (preference instanceof EditTextPreference) {
+        } else if (preference instanceof EditTextPreference) {
             preference.setSummary(value);
         }
 
     }
 
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        //this works like notifydatasetChanged()??
+        Toast error = Toast.makeText(getContext(), "Please select a number between 0.1 and 3", Toast.LENGTH_SHORT);
+        String sizeKey = getString(R.string.pref_size_key);
+        if (preference.getKey().equals(sizeKey)) {
+            String stringSize = (String) newValue;
+            try {
+                float size = Float.parseFloat(stringSize);
+                if (size > 3 || size <= 0) {
+                    error.show();
+                    return false;
+
+                }
+            } catch (NumberFormatException e) {
+                error.show();
+                return false;
+            }
+
+
+        }
+        return true;
+
+    }
 }

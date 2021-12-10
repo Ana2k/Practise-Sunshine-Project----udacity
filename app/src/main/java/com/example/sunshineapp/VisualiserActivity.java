@@ -42,6 +42,7 @@ public class VisualiserActivity extends AppCompatActivity implements SharedPrefe
         setupSharedPreference();
         setupPermissions();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
