@@ -27,7 +27,9 @@ import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
 //BEFORE PROCEEDING.
+//TOdo --
 
+//--||
 //--||
 //--||
 //--||

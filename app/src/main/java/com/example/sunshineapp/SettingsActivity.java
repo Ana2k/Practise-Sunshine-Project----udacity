@@ -33,3 +33,8 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+//Then, in the actual SettingsActivity you should override the home button to act like the back button:
+//
+//        if (id == android.R.id.home) {
+//        onBackPressed();
+//        }

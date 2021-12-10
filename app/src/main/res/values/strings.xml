@@ -163,4 +163,6 @@
     <!-- Value in SharedPreferences for imperial temperature unit option [CHAR LIMIT=NONE] -->
     <string name="pref_units_imperial" translatable="false">imperial</string>
     <string name="action_settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
