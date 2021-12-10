@@ -27,6 +27,9 @@ public class SettingsActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             NavUtils.navigateUpFromSameTask(this);
         }
+        if(id==android.R.id.home){
+            onBackPressed();
+        }
         return super.onOptionsItemSelected(item);
     }
 }
