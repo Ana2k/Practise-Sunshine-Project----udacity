@@ -75,8 +75,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         Preference preference = findPreference(key);
         if (preference != null) {
             if (!(preference instanceof CheckBoxPreference)) {
-                String value = sharedPreferences.getString(preference.getKey(), "");
-                setPreferenceSummary(preference, value);
+                setPreferenceSummary(preference, sharedPreferences.getString(preference.getKey(), ""));
             }
         }
     }
