@@ -14,7 +14,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_settings);
         Log.d(TAG,"onCreate Settings activity was implemented");
         ActionBar actionBar = this.getSupportActionBar();
 
@@ -33,7 +33,3 @@ public class SettingsActivity extends AppCompatActivity {
     }
 }
 //Then, in the actual SettingsActivity you should override the home button to act like the back button:
-//
-//        if (id == android.R.id.home) {
-//        onBackPressed();
-//        }

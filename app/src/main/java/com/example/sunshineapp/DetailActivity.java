@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 import androidx.core.app.ShareCompat;
 
 public class DetailActivity extends AppCompatActivity {
@@ -56,7 +55,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings_refresh_menu) {
             Intent startSettingsActivity = new Intent(this,SettingsActivity.class);
             startActivity(startSettingsActivity);
             return true;

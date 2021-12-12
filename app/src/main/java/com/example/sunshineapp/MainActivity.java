@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             openLocationMap();
             return true;
         }
-        if (idMenuSelected == R.id.action_settings) {
+        if (idMenuSelected == R.id.action_settings_refresh_menu) {
             Intent startSettingsActivity = new Intent(this,SettingsActivity.class);
             startActivity(startSettingsActivity);
             return true;
