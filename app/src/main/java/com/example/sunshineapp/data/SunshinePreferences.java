@@ -2,6 +2,7 @@ package com.example.sunshineapp.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
@@ -32,6 +33,7 @@ public class SunshinePreferences {
 
     private static final String DEFAULT_MAP_LOCATION =
             "1600 Amphitheatre Parkway, Mountain View, CA 94043";
+    private static final String TAG = SunshinePreferences.class.getSimpleName();
 
     /**
      * Helper method to handle setting location details in Preferences (City Name, Latitude,
@@ -78,6 +80,8 @@ public class SunshinePreferences {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String keyForLocation = context.getString(R.string.pref_location_key);
         String defaultLocation = context.getString(R.string.pref_location_default);
+        Log.d(TAG, "getPreferredWeateherLocationWasCalled");
+
         return preferences.getString(keyForLocation,defaultLocation);
     }
 
@@ -100,6 +104,7 @@ public class SunshinePreferences {
         }else {
             userPrefersMetric = false;
         }
+        Log.d(TAG, "isMetric was called");
         return userPrefersMetric;
     }
 

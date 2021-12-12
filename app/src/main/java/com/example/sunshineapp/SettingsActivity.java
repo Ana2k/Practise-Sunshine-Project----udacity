@@ -1,6 +1,7 @@
 package com.example.sunshineapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -9,11 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
 public class SettingsActivity extends AppCompatActivity {
-
+    public static final String TAG = SettingsActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        this.setContentView(R.layout.activity_settings);
+        Log.d(TAG,"onCreate Settings activity was implemented");
         ActionBar actionBar = this.getSupportActionBar();
 
         //Set the action bar back button to look like an up button

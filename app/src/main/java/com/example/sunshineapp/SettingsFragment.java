@@ -2,10 +2,16 @@ package com.example.sunshineapp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -13,6 +19,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+    private static final String TAG = SettingsFragment.class.getSimpleName();
 
     @Override
     public void onStart() {
@@ -50,7 +58,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d(TAG,"onCreate Settings fragment was implemented");
+        Log.d(TAG, String.valueOf(inflater.inflate(R.layout.fragment_settings, container, false)));
         return inflater.inflate(R.layout.fragment_settings, container, false);
+
     }
 
     public void setPreferenceSummary(Preference preference, String value) {
@@ -80,4 +91,3 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
     }
 }
-

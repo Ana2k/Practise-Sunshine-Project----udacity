@@ -30,7 +30,7 @@ import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
 import java.net.URL;
 //BEFORE PROCEEDING.
 //TOdo --
-
+final
 //--||
 //--||
 //--||
@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecycleView = (RecyclerView) findViewById(R.id.recyclerview_forecast);
-        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
-        mProgressBar = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        mRecycleView = findViewById(R.id.recyclerview_forecast);
+        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
+        mProgressBar = findViewById(R.id.pb_loading_indicator);
 
         mForecastAdapter = new ForecastAdapter(this);
 
@@ -83,9 +83,14 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
         Bundle queryBundle = null;
 
+        LoaderManager.LoaderCallbacks<String[]> callback = MainActivity.this;
+
+
         LoaderManager loadManager = getLoaderManager();
 //        Loader<Object> searchLoader = loadManager.getLoader(LOADER_ID);
-        loadManager.initLoader(LOADER_ID,queryBundle,this);
+        loadManager.initLoader(LOADER_ID,queryBundle,callback);
+
+        Log.d(TAG, "onCreate: registering preference changed listener");
 
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(this);
