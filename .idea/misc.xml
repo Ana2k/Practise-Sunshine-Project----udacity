@@ -8,20 +8,11 @@
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_forecast.xml" value="0.155146316851665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.11018518518518519" />
-        <entry key="app/src/main/res/layout/activity_settingss.xml" value="0.1425925925925926" />
-        <entry key="app/src/main/res/layout/activity_setttings.xml" value="0.12777777777777777" />
-        <entry key="app/src/main/res/layout/activity_visualiser.xml" value="0.12777777777777777" />
-        <entry key="app/src/main/res/layout/forecast_item_list.xml" value="0.1425925925925926" />
-        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/items_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/number_item_list.xml" value="0.1" />
         <entry key="app/src/main/res/menu/action_refresh.xml" value="0.1" />
         <entry key="app/src/main/res/menu/main.xml" value="0.13243243243243244" />
-        <entry key="app/src/main/res/menu/visualiser_menu.xml" value="0.12777777777777777" />
-        <entry key="app/src/main/res/xml-v26/pref_general.xml" value="0.1425925925925926" />
-        <entry key="app/src/main/res/xml/pref_visualiser.xml" value="0.1" />
       </map>
     </option>
   </component>
