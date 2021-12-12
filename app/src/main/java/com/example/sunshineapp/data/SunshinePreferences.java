@@ -1,8 +1,16 @@
 package com.example.sunshineapp.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+
+import androidx.preference.PreferenceManager;
+
+import com.example.sunshineapp.R;
+//TODOs
 
 public class SunshinePreferences {
+
     /*
      * Human readable location string, provided by the API.  Because for styling,
      * "Mountain View" is more recognizable than 94043.
@@ -25,6 +33,7 @@ public class SunshinePreferences {
 
     private static final String DEFAULT_MAP_LOCATION =
             "1600 Amphitheatre Parkway, Mountain View, CA 94043";
+    private static final String TAG = SunshinePreferences.class.getSimpleName();
 
     /**
      * Helper method to handle setting location details in Preferences (City Name, Latitude,
@@ -68,8 +77,12 @@ public class SunshinePreferences {
      *  "94043,USA" if SharedPreferences have not been implemented yet.
      */
     public static String getPreferredWeatherLocation(Context context) {
-        /** This will be implemented in a future lesson **/
-        return getDefaultWeatherLocation();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String keyForLocation = context.getString(R.string.pref_location_key);
+        String defaultLocation = context.getString(R.string.pref_location_default);
+        Log.d(TAG, "getPreferredWeateherLocationWasCalled");
+
+        return preferences.getString(keyForLocation,defaultLocation);
     }
 
     /**
@@ -79,8 +92,20 @@ public class SunshinePreferences {
      * @return true If metric display should be used
      */
     public static boolean isMetric(Context context) {
-        /** This will be implemented in a future lesson **/
-        return true;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String keyForUnits = context.getString(R.string.pref_units_key);
+        String defaultUnits = context.getString(R.string.pref_units_label);
+
+        String preferredUnits = preferences.getString(keyForUnits,defaultUnits);
+        String metric = context.getString(R.string.pref_units_metric);
+        boolean userPrefersMetric;
+        if(metric.equals(preferredUnits)){
+            userPrefersMetric = true;
+        }else {
+            userPrefersMetric = false;
+        }
+        Log.d(TAG, "isMetric was called");
+        return userPrefersMetric;
     }
 
     public static double[] getLocationinCoordinates(Context context){
