@@ -54,16 +54,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Log.d(TAG,"onCreate Settings fragment was implemented");
-        Log.d(TAG, String.valueOf(inflater.inflate(R.layout.fragment_settings, container, false)));
-        return inflater.inflate(R.layout.fragment_settings, container, false);
-
-    }
-
     public void setPreferenceSummary(Preference preference, String value) {
         String stringValue = preference.toString();
         String key = preference.getKey();

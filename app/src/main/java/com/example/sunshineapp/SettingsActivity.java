@@ -26,9 +26,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            NavUtils.navigateUpFromSameTask(this);
-        }
         if(id==android.R.id.home){
             onBackPressed();
         }
