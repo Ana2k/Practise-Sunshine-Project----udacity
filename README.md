@@ -6,3 +6,5 @@ Check diffs for more specs.
 
 PS.UPDATE this README.md at the end. 
 Make seperate private repos for useful toy_apps to use as reference.
+
+PPS. link that explains how to create multiple apps in one project.
