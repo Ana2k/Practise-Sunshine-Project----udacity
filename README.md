@@ -7,4 +7,6 @@ Check diffs for more specs.
 PS.UPDATE this README.md at the end. 
 Make seperate private repos for useful toy_apps to use as reference.
 
-PPS. link that explains how to create multiple apps in one project.
+PPS. link that explains how to create multiple apps in one project. or libraries:
+https://stackoverflow.com/questions/32419621/can-we-have-multiple-apps-in-one-android-studio-project
+
