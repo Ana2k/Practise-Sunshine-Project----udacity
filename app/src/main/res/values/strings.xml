@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
+    <!--    toy_APP 08 strings-->
+
+    <string name="app_name">QuizExample</string>
+    <string name="show_definition">Show Definition</string>
+    <string name="next_word">Next Word</string>
+
 
     <!-- - - - - - - - - - - - - -->
     <!-- Used throughout Sunshine-->
@@ -8,8 +14,7 @@
 
     <!--Used in Action Bar, and in AndroidManifest to tell the device the name of this app.-->
     <!--It's good to keep this short, so your launcher icon isn't displayed with "The greatest Wea"-->
-    <!--or something similar.-->
-    <string name="app_name">Sunshine</string>
+
     <string name="refresh">Refresh</string>
 
 
