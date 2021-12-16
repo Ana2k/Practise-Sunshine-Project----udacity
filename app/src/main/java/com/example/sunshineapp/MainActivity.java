@@ -76,11 +76,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void nextWord() {
         //check if the cursor is at the end and then fix it accordingly
+        if(mData!=null){
+            if(!mData.moveToNext()){
+                mData.moveToFirst();
+            }
+        }
+        // Hide the definition TextView
+        mDefniitionTextView.setVisibility(View.INVISIBLE);
+        //change the button text
+        mButton.setText(getString(R.string.show_definition));
+                //Get the next word
+        mWordTextView.setText(mData.getString(mWordCols));
+        mDefniitionTextView.setText(mData.getString(mDefCols));
 
+        mCurrentState = STATE_HIDDEN;
 
     }
 
     private void showDefinition() {
+        if(mData!=null){
+            mDefniitionTextView.setVisibility(View.VISIBLE);
+            mButton.setText(getString(R.string.show_definition));
+        }
+        mCurrentState = STATE_SHOWN;
 
     }
 
