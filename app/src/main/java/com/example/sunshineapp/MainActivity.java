@@ -4,13 +4,17 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.droidtermsprovider.DroidTermsExampleContract;
+
+import org.w3c.dom.Text;
 //BEFORE PROCEEDING.
 
 //--||
@@ -18,10 +22,13 @@ import com.example.droidtermsprovider.DroidTermsExampleContract;
 //--||
 //-\__/
 //--\/
+//-- to do and think and do steps from this file
+//-- https://github.com/udacity/ud851-Exercises/blob/fb6128094b935abb21d35900dd675878d0063232/app/src/main/java/com/udacity/example/quizexample/MainActivity.java
 
 public class MainActivity extends AppCompatActivity {
 
     // The data from the DroidTermsExample content provider
+//    Log.d()
     private Cursor mData;
 
     // The current state of the app
@@ -36,12 +43,17 @@ public class MainActivity extends AppCompatActivity {
     // This state is when the word definition is shown and clicking the button will therefore
     // advance the app to the next word
     private final int STATE_SHOWN = 1;
+    private TextView mWordTextView;
+    private TextView mDefniitionTextView;
+    private int mWordCols,mDefCols;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mWordTextView = findViewById(R.id.tv_word);
+        mDefniitionTextView = findViewById(R.id.tv_defenition);
         mButton = findViewById(R.id.button_next);
         new WordFetchTask().execute();
     }
@@ -63,12 +75,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void nextWord() {
-        mButton.setText(getString(R.string.show_defintion));
-        mCurrentState = STATE_HIDDEN;
+        //check if the cursor is at the end and then fix it accordingly
+
+
     }
 
     private void showDefinition() {
-        mButton.setText(getString(R.string.next_word));
+
     }
 
     @Override
@@ -84,7 +97,10 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Cursor cursor) {
             super.onPostExecute(cursor);
             mData = cursor;
-
+            //Innitialize anything that you need the cursor for, such as setting up
+            // the screen with the first word and setting any other instance variables
+            mDefCols = mData.getColumnIndex(DroidTermsExampleContract.COLUMN_DEFINITION);
+            mWordCols = mData.getColumnIndex(DroidTermsExampleContract.COLUMN_WORD);
         }
 
         @Override
