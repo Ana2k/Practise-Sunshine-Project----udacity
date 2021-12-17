@@ -36,7 +36,7 @@ public class SunshinePreferences {
      * @param lon      The longitude of the city
      */
     static public void setLocationDetails(Context context, String cityName, double lat, double lon){
-        //FUTURE LESSON
+
     }
 
     /**
