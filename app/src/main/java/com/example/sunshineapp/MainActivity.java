@@ -119,6 +119,15 @@ public class MainActivity extends AppCompatActivity {
             // the screen with the first word and setting any other instance variables
             mDefCols = mData.getColumnIndex(DroidTermsExampleContract.COLUMN_DEFINITION);
             mWordCols = mData.getColumnIndex(DroidTermsExampleContract.COLUMN_WORD);
+
+            while(mData.moveToNext()){
+                String word,defenition;
+                word = mData.getString(mWordCols);
+                defenition = mData.getString(mDefCols);
+                Log.v("Cursor Example",word+"--"+defenition);
+            }
+            mData.moveToFirst();
+            nextWord();
         }
 
         @Override
