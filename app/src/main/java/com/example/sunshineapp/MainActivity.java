@@ -23,8 +23,7 @@ import org.w3c.dom.Text;
 //-\__/
 //--\/
 //-- to do and think and do steps from this file
-//-- https://github.com/udacity/ud851-Exercises/blob/fb6128094b935abb21d35900dd675878d0063232/app/src/main/java/com/udacity/example/quizexample/MainActivity.java
-
+//-- https://classroom.udacity.com/courses/ud851/lessons/b071166b-dec4-4468-b419-422e3ab0194d/concepts/f0ca2615-a88e-485c-96d5-b9060f479e8a
 public class MainActivity extends AppCompatActivity {
 
     // The data from the DroidTermsExample content provider
