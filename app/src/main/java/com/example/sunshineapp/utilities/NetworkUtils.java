@@ -1,6 +1,10 @@
 package com.example.sunshineapp.utilities;
 
+import android.content.Context;
 import android.net.Uri;
+
+import com.example.sunshineapp.MainActivity;
+import com.example.sunshineapp.data.SunshinePreferences;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,16 +42,42 @@ public class NetworkUtils {
     final static String UNITS_PARAM = "units";
     final static String DAYS_PARAM = "cnt";
 
-    public static URL buildURL(String locationQuery){
-        //as seen from toy_app_network
-        //https://github.com/Ana2k/Practise-Sunshine-Project----udactiy/blob/toy_app_network/app/src/main/java/com/example/sunshineapp/utilities/NetworkUtils.java
+    /**
+     * Retrieves the proper URL to query for the weather data. The reason for both this method as
+     * well as {@link #buildUrlWithLocationQuery(String)} is two fold.
+     * <p>
+     * 1) You should be able to just use one method when you need to create the URL within the
+     * app instead of calling both methods.
+     * 2) Later in Sunshine, you are going to add an alternate method of allowing the user
+     * to select their preferred location. Once you do so, there will be another way to form
+     * the URL using a latitude and longitude rather than just a location String. This method
+     * will "decide" which URL to build and return it.
+     *
+     * @param context used to access other Utility methods
+     * @return URL to query weather service
+     */
+    public static URL getUrl(Context context){
+        if(SunshinePreferences.isLocationLatLonAvailable(context)){
+            double[] preferredCoordinates = SunshinePreferences.getLocationinCoordinates(context);
+            double latitude = preferredCoordinates[0];
+            double longitude = preferredCoordinates[1];
+            return buildUrlWithLatitudeLongitude(longitude,latitude);
 
+        }else{
+            String locationQuery = SunshinePreferences.getPreferredWeatherLocation(context);
+            return buildUrlWithLocationQuery(locationQuery);
+        }
+    }
+    //implemennt SunshinePreferences post this.
+
+
+    public static URL buildUrlWithLocationQuery(String locationQuery){
         Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                 .appendQueryParameter(QUERY_PARAM,locationQuery)
                 .appendQueryParameter(FORMAT_PARAM,format)
                 .appendQueryParameter(UNITS_PARAM,units)
-                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays)).build();
-//        appendQueryParameter. Encodes the key and value and then appends the parameter to the query string
+                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .build();
 
         URL url = null;
         try{
@@ -55,14 +85,26 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-//        Log.v(TAG, "Built URI " + url); -- for debug
-
         return url;
     }
 
-    public static URL buildURL(Double lat, Double lon){
+    public static URL buildUrlWithLatitudeLongitude(Double latitude, Double longitude){
+        Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
+                .appendQueryParameter(LAT_PARAM,String.valueOf(latitude))
+                .appendQueryParameter(LON_PARAM,String.valueOf(longitude))
+                .appendQueryParameter(FORMAT_PARAM,format)
+                .appendQueryParameter(UNITS_PARAM,units)
+                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .build();
 
-        return null;
+        URL weatherQueryUrl = null;
+        try{
+            weatherQueryUrl = new URL(builtUri.toString());
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return weatherQueryUrl;
     }
 
     /**

@@ -163,10 +163,11 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             @Override
             public String[] loadInBackground() {
 
-                String locationQuery = SunshinePreferences
-                        .getPreferredWeatherLocation(getBaseContext());
-
-                URL weatherRequestURL = NetworkUtils.buildURL(locationQuery);
+//                String locationQuery = SunshinePreferences
+//                        .getPreferredWeatherLocation(getBaseContext());
+//
+//                URL weatherRequestURL = NetworkUtils.buildURL(locationQuery);
+                URL weatherRequestUrl = NetworkUtils.getUrl(MainActivity.this);
 
 
                 try {
