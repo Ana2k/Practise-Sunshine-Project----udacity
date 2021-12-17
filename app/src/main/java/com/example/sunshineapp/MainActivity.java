@@ -33,6 +33,8 @@ import java.net.URL;
 //--||
 //-\__/
 //--\/
+//
+//-- https://classroom.udacity.com/courses/ud851/lessons/b071166b-dec4-4468-b419-422e3ab0194d/concepts/6a39c872-78e5-4513-a017-26aaf15856b0
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String[]> {
 
