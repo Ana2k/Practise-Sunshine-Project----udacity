@@ -6,6 +6,7 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +29,9 @@ import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
 //BEFORE PROCEEDING.
-
+//TOdo --
+final
+//--||
 //--||
 //--||
 //--||
@@ -36,7 +40,7 @@ import java.net.URL;
 //-- https://github.com/udacity/ud851-Sunshine/commit/b29066bd64417caef08ad24fe6eba61b8e80539f
 //-- https://github.com/udacity/ud851-Sunshine/blob/b29066bd64417caef08ad24fe6eba61b8e80539f/app/src/main/java/com/example/android/sunshine/utilities/OpenWeatherJsonUtils.java
 
-public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String[]> {
+public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String[]>, SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     /**
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     private RecyclerView mRecycleView;
 
     private static int LOADER_ID = 3;
+    private static boolean PREFERENCE_HAVE_BEEN_UPDATED = false;
 
     private String[] mWeatherData = null;//to be used by lambda of LoaderManager--LoaderCAllback
 
@@ -66,9 +71,9 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecycleView = (RecyclerView) findViewById(R.id.recyclerview_forecast);
-        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
-        mProgressBar = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        mRecycleView = findViewById(R.id.recyclerview_forecast);
+        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
+        mProgressBar = findViewById(R.id.pb_loading_indicator);
 
         mForecastAdapter = new ForecastAdapter(this);
 
@@ -80,9 +85,43 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
         Bundle queryBundle = null;
 
+        LoaderManager.LoaderCallbacks<String[]> callback = MainActivity.this;
+
+
         LoaderManager loadManager = getLoaderManager();
 //        Loader<Object> searchLoader = loadManager.getLoader(LOADER_ID);
-        loadManager.initLoader(LOADER_ID,queryBundle,this);
+        loadManager.initLoader(LOADER_ID,queryBundle,callback);
+
+        Log.d(TAG, "onCreate: registering preference changed listener");
+
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    //In onStart, if preferences have been changed, refresh the data and set the flag to false
+    /**
+     * OnStart is called when the Activity is coming into view. This happens when the Activity is
+     * first created, but also happens when the Activity is returned to from another Activity. We
+     * are going to use the fact that onStart is called when the user returns to this Activity to
+     * check if the location setting or the preferred units setting has changed. If it has changed,
+     * we are going to perform a new query.
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(PREFERENCE_HAVE_BEEN_UPDATED){
+            Log.d(TAG,"onStart: preferences were updated");
+            getLoaderManager().restartLoader(LOADER_ID,null,this);
+            PREFERENCE_HAVE_BEEN_UPDATED = false;
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -93,6 +132,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         childStartActivityIntent.putExtra(Intent.EXTRA_TEXT, weatherForDay);
         startActivity(childStartActivityIntent);
     }
+
+
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -181,7 +222,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     }
 
     private void openLocationMap() {
-        String addressString = "1600 Ampitheatre Parkway, CA";
+        String addressString = SunshinePreferences
+                .getPreferredWeatherLocation(this);
         Uri geolocation = Uri.parse("geo:0,0?q=" + addressString);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(geolocation);
@@ -211,9 +253,29 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             openLocationMap();
             return true;
         }
+        if (idMenuSelected == R.id.action_settings_refresh_menu) {
+            Intent startSettingsActivity = new Intent(this,SettingsActivity.class);
+            startActivity(startSettingsActivity);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        /*
+         * Set this flag to true so that when control returns to MainActivity, it can refresh the
+         * data.
+         *
+         * This isn't the ideal solution because there really isn't a need to perform another
+         * GET request just to change the units, but this is the simplest solution that gets the
+         * job done for now. Later in this course, we are going to show you more elegant ways to
+         * handle converting the units from celsius to fahrenheit and back without hitting the
+         * network again by keeping a copy of the data in a manageable format.
+         */
+        PREFERENCE_HAVE_BEEN_UPDATED = true;
+    }
 }
 
 //split the files after app is done??

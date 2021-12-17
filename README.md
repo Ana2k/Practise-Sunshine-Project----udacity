@@ -4,7 +4,9 @@ EACH "non-toy-app" Branch has the specific smaller task implemented through in t
 EACH toy-app branch has only that task implemented.
 Check diffs for more specs.
 
-PVT COMMENT:
-Re-do the course on a revision repo if you have forgotten everythinng,Ana.
+PS.UPDATE this README.md at the end. 
+Make seperate private repos for useful toy_apps to use as reference.
 
-PS.UPDATE THIS AT THE END
+PPS. link that explains how to create multiple apps in one project. or libraries:
+https://stackoverflow.com/questions/32419621/can-we-have-multiple-apps-in-one-android-studio-project
+
