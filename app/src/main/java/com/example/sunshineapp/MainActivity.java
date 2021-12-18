@@ -28,6 +28,7 @@ import com.example.sunshineapp.utilities.NetworkUtils;
 import com.example.sunshineapp.utilities.OpenWeatherJsonUtils;
 
 import java.net.URL;
+
 //BEFORE PROCEEDING.
 //TOdo --
 final
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
         LoaderManager loadManager = getLoaderManager();
 //        Loader<Object> searchLoader = loadManager.getLoader(LOADER_ID);
-        loadManager.initLoader(LOADER_ID,queryBundle,callback);
+        loadManager.initLoader(LOADER_ID, queryBundle, callback);
 
         Log.d(TAG, "onCreate: registering preference changed listener");
 
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     }
 
     //In onStart, if preferences have been changed, refresh the data and set the flag to false
+
     /**
      * OnStart is called when the Activity is coming into view. This happens when the Activity is
      * first created, but also happens when the Activity is returned to from another Activity. We
@@ -109,9 +111,9 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     @Override
     protected void onStart() {
         super.onStart();
-        if(PREFERENCE_HAVE_BEEN_UPDATED){
-            Log.d(TAG,"onStart: preferences were updated");
-            getLoaderManager().restartLoader(LOADER_ID,null,this);
+        if (PREFERENCE_HAVE_BEEN_UPDATED) {
+            Log.d(TAG, "onStart: preferences were updated");
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
             PREFERENCE_HAVE_BEEN_UPDATED = false;
         }
 
@@ -134,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     }
 
 
-
     @SuppressLint("StaticFieldLeak")
     @Override
     public Loader<String[]> onCreateLoader(int id, final Bundle args) {
@@ -144,10 +145,9 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
             @Override
             protected void onStartLoading() {
-                if(mWeatherData !=null){
+                if (mWeatherData != null) {
                     deliverResult(mWeatherData);
-                }
-                else{
+                } else {
                     mProgressBar.setVisibility(View.VISIBLE);
                     forceLoad();
                 }
@@ -163,15 +163,12 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             @Override
             public String[] loadInBackground() {
 
-//                String locationQuery = SunshinePreferences
-//                        .getPreferredWeatherLocation(getBaseContext());
-//
-//                URL weatherRequestURL = NetworkUtils.buildURL(locationQuery);
-                URL weatherRequestUrl = NetworkUtils.getUrl(MainActivity.this);
+                URL weatherRequestURL = NetworkUtils.getUrl(MainActivity.this);
 
 
                 try {
-                    String weatherSearchResponse = NetworkUtils
+                    String weatherSearchResponse =
+                            NetworkUtils
                             .getResponseHttpUrl(weatherRequestURL);
                     String[] simpleJsonWeatherData = OpenWeatherJsonUtils
                             .getSimpleWeatherStringsfromJson(getApplicationContext(), weatherSearchResponse);
@@ -210,8 +207,6 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
     }
 
 
-
-
     public void showJsonDataView() {
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
         mRecycleView.setVisibility(View.VISIBLE);
@@ -247,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         int idMenuSelected = item.getItemId();
         if (idMenuSelected == R.id.action_refresh) {
             mForecastAdapter.setWeatherData(null);
-            getLoaderManager().restartLoader(LOADER_ID,null,this);
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
             return true;
         }
         if (idMenuSelected == R.id.action_map) {
@@ -255,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
             return true;
         }
         if (idMenuSelected == R.id.action_settings_refresh_menu) {
-            Intent startSettingsActivity = new Intent(this,SettingsActivity.class);
+            Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
             startActivity(startSettingsActivity);
             return true;
         }

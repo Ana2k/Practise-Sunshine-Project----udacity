@@ -85,11 +85,12 @@ public final class SunshinePreferences {
      */
     public static boolean isMetric(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
         String keyForUnits = context.getString(R.string.pref_units_key);
         String defaultUnits = context.getString(R.string.pref_units_label);
-
         String preferredUnits = sharedPreferences.getString(keyForUnits, defaultUnits);
         String metric = context.getString(R.string.pref_units_metric);
+
         boolean userPrefersMetric;
         if (metric.equals(preferredUnits)) {
             userPrefersMetric = true;

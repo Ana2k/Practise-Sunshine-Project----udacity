@@ -158,6 +158,11 @@ public class SunshineDateUtils {
             return dayFormat.format(dateInMillis);
         }
     }
+
+    public static long getNormalisedUtcDateForToday() {
+
+
+    }
 }
 //https://stackoverflow.com/questions/38528891/how-to-change-the-code-below-to-support-locale
 //in case we want to support a different lannguage
