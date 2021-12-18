@@ -37,8 +37,8 @@ final
 //--||
 //-\__/
 //--\/
-//-- https://github.com/udacity/ud851-Sunshine/commit/b29066bd64417caef08ad24fe6eba61b8e80539f
-//-- https://github.com/udacity/ud851-Sunshine/blob/b29066bd64417caef08ad24fe6eba61b8e80539f/app/src/main/java/com/example/android/sunshine/utilities/OpenWeatherJsonUtils.java
+// left
+//of settings fragment, sunshine preferences and openutilsjson.
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String[]>, SharedPreferences.OnSharedPreferenceChangeListener {
 

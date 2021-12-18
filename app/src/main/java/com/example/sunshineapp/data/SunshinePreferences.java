@@ -7,9 +7,8 @@ import android.util.Log;
 import androidx.preference.PreferenceManager;
 
 import com.example.sunshineapp.R;
-//TODOs
 
-public class SunshinePreferences {
+public final class SunshinePreferences {
 
     /*
      * Human readable location string, provided by the API.  Because for styling,
@@ -41,11 +40,16 @@ public class SunshinePreferences {
      *
      * @param context Context used to get the SharedPreferences
      * @param cityName A human-readable city name, e.g "Mountain View"
-     * @param lat      The latitude of the city
-     * @param lon      The longitude of the city
+     * @param latitude      The latitude of the city
+     * @param longitude      The longitude of the city
      */
-    static public void setLocationDetails(Context context, String cityName, double lat, double lon){
+    static public void setLocationDetails(Context context, String cityName, double latitude, double longitude){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        editor.putLong(PREF_COORD_LAT,Double.doubleToRawLongBits(latitude));
+        editor.putLong(PREF_COORD_LONG,Double.doubleToRawLongBits(longitude));
+        editor.apply();
     }
 
     /**
@@ -67,7 +71,7 @@ public class SunshinePreferences {
      * @param context
      */
     static public void resetLocationCoordinnates(Context context){
-        //FUTURE
+
     }
 
     /**
