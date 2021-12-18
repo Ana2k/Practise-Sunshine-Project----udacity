@@ -7,6 +7,8 @@ import android.util.Log;
 import androidx.preference.PreferenceManager;
 
 import com.example.sunshineapp.R;
+//TODOs
+//https://github.com/udacity/ud851-Sunshine/blob/95f0e18860a9869898d747fd54ac7e16f76d3ce2/app/src/main/java/com/example/android/sunshine/data/SunshinePreferences.java
 
 public final class SunshinePreferences {
 
