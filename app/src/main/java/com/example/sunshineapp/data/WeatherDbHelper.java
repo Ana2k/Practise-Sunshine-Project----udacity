@@ -42,13 +42,13 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
          * This String will contain a simple SQL statement that will create a table that will
          * cache our weather data.
          */
-        final String SQL_CREATE_WEATHER_TABLE = "CREATE TABLE"+ WeatherEntry.TABLE_NAME+"("+
+        final String SQL_CREATE_WEATHER_TABLE = "CREATE TABLE "+ WeatherEntry.TABLE_NAME+"("+
         /*
          * WeatherEntry did not explicitly declare a column called "_ID". However,
          * WeatherEntry implements the interface, "BaseColumns", which does have a field
          * named "_ID". We use that here to designate our table's primary key.
          */
-        WeatherEntry._ID +"INTEGER PRIMARY KEY AUTOINCRMENT, "+
+        WeatherEntry._ID +"INTEGER PRIMARY KEY AUTOINCREMENT, "+
 
                 WeatherEntry.COLUMN_DATE+"INTEGER NOT NULL, "+
                 WeatherEntry.COLUMN_WEATHER_ID+"INTEGER NOT NULL, "+
@@ -60,7 +60,9 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                 WeatherEntry.COLUMN_PRESSURE+"REAL NOT NULL, "+
 
                 WeatherEntry.COLUMN_WIND_SPEED + " REAL NOT NULL, "                    +
-                WeatherEntry.COLUMN_DEGREES    + " REAL NOT NULL" + ");";
+                WeatherEntry.COLUMN_DEGREES    + "REAL NOT NULL, " +
+
+                " UNIQUE (" + WeatherEntry.COLUMN_DATE + ") ON CONFLICT REPLACE);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_WEATHER_TABLE);
     }
@@ -79,7 +81,8 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS"+WeatherEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+WeatherEntry.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 }
+//SPACES MATTER A LOT IN DB CREATION IN DATABASES.
