@@ -31,7 +31,7 @@ import java.net.URL;
 
 //BEFORE PROCEEDING.
 //TOdo --
-final
+
 //--||
 //--||
 //--||
@@ -40,6 +40,8 @@ final
 //--\/
 // left
 //of settings fragment, sunshine preferences and openutilsjson.
+//--SEE THE FILES TO CHANGE FROM HERE AND CHANGE THE FILES IN,
+//https://github.com/udacity/ud851-Sunshine/tree/S09.01-Exercise-ContentProviderFoundation/app/src/main/java/com/example/android/sunshine/data
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String[]>, SharedPreferences.OnSharedPreferenceChangeListener {
 
