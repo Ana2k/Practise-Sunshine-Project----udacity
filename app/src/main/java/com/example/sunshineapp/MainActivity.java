@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mData.close();
-    }
+    } 
 
     //from network branch of sunshine appp
     private class WordFetchTask extends AsyncTask<Void, Void, Cursor> {
