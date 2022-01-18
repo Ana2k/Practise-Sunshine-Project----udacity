@@ -9,6 +9,12 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+//TODO complete remaining files.
+//https://github.com/udacity/ud851-Sunshine/commits/S09.04-Solution-UsingCursorLoader
+//--link to commit tree - above
+//link to sunshinedateutils - down
+//https://github.com/udacity/ud851-Sunshine/blob/09b638db278165eeea664e0bbd71eee98d2dc524/app/src/main/java/com/example/android/sunshine/utilities/SunshineDateUtils.java
+
 public class SunshineDateUtils {
     public static final long SECOND_IN_MILLIS = 1000;
     public static final long MINUTE_IN_MILLIS = SECOND_IN_MILLIS * 60;

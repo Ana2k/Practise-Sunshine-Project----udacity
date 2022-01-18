@@ -29,7 +29,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
      * use-case, we wanted to watch out for it and warn you what could happen if you mistakenly
      * version your databases.
      */
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public WeatherDbHelper(@Nullable Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -65,6 +65,16 @@ public class WeatherDbHelper extends SQLiteOpenHelper {
                 " UNIQUE (" + WeatherEntry.COLUMN_DATE + ") ON CONFLICT REPLACE);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_WEATHER_TABLE);
+        /*
+         * To ensure this table can only contain one weather entry per date, we declare
+         * the date column to be unique. We also specify "ON CONFLICT REPLACE". This tells
+         * SQLite that if we have a weather entry for a certain date and we attempt to
+         * insert another weather entry with that date, we replace the old weather entry.
+         */
+        /*
+         * After we've spelled out our SQLite table creation statement above, we actually execute
+         * that SQL with the execSQL method of our SQLite database object.
+         */
     }
 
     /**

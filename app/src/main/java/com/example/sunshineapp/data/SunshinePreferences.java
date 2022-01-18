@@ -2,12 +2,10 @@ package com.example.sunshineapp.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
-import androidx.preference.PreferenceManager;
-
 import com.example.sunshineapp.R;
-//TODOs
 
 public final class SunshinePreferences {
 
