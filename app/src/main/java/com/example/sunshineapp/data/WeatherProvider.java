@@ -28,7 +28,7 @@ public class WeatherProvider extends ContentProvider {
      * ourselves, such as using regular expressions.
      */
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private WeatherDbHelper mOpeHelper;
+    private WeatherDbHelper mOpenHelper;
 
     private static UriMatcher buildUriMatcher() {
         /*
@@ -37,13 +37,13 @@ public class WeatherProvider extends ContentProvider {
          * return for the root URI. It's common to use NO_MATCH as the code for this case.
          */
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = WeatherContract.CONTENTAUTHORITY;
+        final String authority = WeatherContract.CONTENT_AUTHORITY;
         /*
          * This URI would look something like content://com.example.android.sunshine/weather/1472214172
          * The "/#" signifies to the UriMatcher that if PATH_WEATHER is followed by ANY number,
          * that it should return the CODE_WEATHER_WITH_DATE code
          */
-        matcher.addURI(authority,WeatherContract.PATH_WEATHER+"/#");
+        matcher.addURI(authority,WeatherContract.PATH_WEATHER+"/#",CODE_WEATHER);
         return matcher;
     }
 
@@ -83,7 +83,7 @@ public class WeatherProvider extends ContentProvider {
      */
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-        final SQLiteDatabase db = mOpeHelper.getWritableDatabase();
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         switch(sUriMatcher.match(uri)){
             case CODE_WEATHER:
                 db.beginTransaction();
@@ -100,7 +100,7 @@ public class WeatherProvider extends ContentProvider {
                             rowsInserted+=1;
                         }
                     }
-
+                    db.setTransactionSuccessful();
                 } finally {
                     db.endTransaction();
                 }
@@ -165,7 +165,7 @@ public class WeatherProvider extends ContentProvider {
                  */
                 String[] selectionArguments = new String[]{normalisedUtcDateString};
 
-                cursor = mOpeHelper.getReadableDatabase().query(
+                cursor = mOpenHelper.getReadableDatabase().query(
                         WeatherContract.WeatherEntry.TABLE_NAME,
                         /*
                          * A projection designates the columns we want returned in our Cursor.
@@ -203,7 +203,7 @@ public class WeatherProvider extends ContentProvider {
              * in our weather table.
              */
             case CODE_WEATHER:{
-                cursor = mOpeHelper.getReadableDatabase().query(
+                cursor = mOpenHelper.getReadableDatabase().query(
                         WeatherContract.WeatherEntry.TABLE_NAME,
                         projection,
                         selection,
@@ -217,6 +217,8 @@ public class WeatherProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: "+uri);
         }
+        cursor.setNotificationUri(getContext().getContentResolver(),uri);
+        return cursor;
     }
 
     @Nullable
@@ -265,7 +267,7 @@ public class WeatherProvider extends ContentProvider {
 
         switch (sUriMatcher.match(uri)){
             case CODE_WEATHER:
-                numsRowsDeleted = mOpeHelper.getWritableDatabase().delete(
+                numsRowsDeleted = mOpenHelper.getWritableDatabase().delete(
                         WeatherContract.WeatherEntry.TABLE_NAME,
                         selection,
                         selectionArgs
