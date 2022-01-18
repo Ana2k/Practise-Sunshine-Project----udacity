@@ -38,10 +38,10 @@ import java.net.URL;
 //--||
 //-\__/
 //--\/
-// left
-//of settings fragment, sunshine preferences and openutilsjson.
+
 //--SEE THE FILES TO CHANGE FROM HERE AND CHANGE THE FILES IN,
-//https://github.com/udacity/ud851-Sunshine/tree/S09.01-Exercise-ContentProviderFoundation/app/src/main/java/com/example/android/sunshine/data
+//-- https://github.com/udacity/ud851-Sunshine/commit/bff137894dbbe00b44c28e3a0414810b5e972a3b
+//implemnting cursor loader, and the basic structure.
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler, LoaderManager.LoaderCallbacks<String[]>, SharedPreferences.OnSharedPreferenceChangeListener {
 
